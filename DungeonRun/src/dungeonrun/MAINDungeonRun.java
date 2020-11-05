@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class MAINDungeonRun implements Serializable{
 
-    static Scanner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);      
     static boolean loop = true;
     public static void main(String[] args) {
         while (true) {
