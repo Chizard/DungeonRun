@@ -19,6 +19,14 @@ public abstract class HeroesAbstract implements Serializable{
         this.name = name;
         this.role = role;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
     public static void stats() {
         System.out.println("Nu blev det fel");

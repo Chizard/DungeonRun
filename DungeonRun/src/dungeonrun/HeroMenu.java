@@ -7,8 +7,9 @@ import java.util.Scanner;
 public class HeroMenu implements Serializable {
 
     static Scanner sc = new Scanner(System.in);
-    static ArrayList<HeroesAbstract> stats = new ArrayList<>(); // Komma på hur vi sparar både typ av hjälte och valt namn
-
+    static ArrayList<HeroesAbstract> stats = new ArrayList<>();         // Komma på hur vi sparar både typ av hjälte och valt namn
+    static boolean test = true;
+    
     public static void chooseHero() {
 
         System.out.println("                      =============== ");
@@ -29,6 +30,7 @@ public class HeroMenu implements Serializable {
                 String role = "Knight";
                 HeroesAbstract knight = new Knight(5, 9, 6, 4, name, role);
                 stats.add(knight);
+                checkName(name);
                 saveHero();
             } else {
                 chooseHero();
@@ -115,7 +117,7 @@ public class HeroMenu implements Serializable {
 
     public static void loadCharacter() {
         try {
-            FileInputStream fis = new FileInputStream("HeroList");
+            FileInputStream fis = new FileInputStream("CharacterList");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             stats= (ArrayList) ois.readObject();
@@ -160,13 +162,14 @@ public class HeroMenu implements Serializable {
     public static String name() {
         System.out.println("\nEnter name");
         String input = sc.nextLine();
+        
         return input;
     }
 
     public static void saveHero() {
 
         try {
-            FileOutputStream fos = new FileOutputStream("HeroList");           // Ta bort ,true senare. Samma som med 117.
+            FileOutputStream fos = new FileOutputStream("CharacterList");           // Ta bort ,true senare. Samma som med 117.
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(stats);
             oos.close();
@@ -177,4 +180,16 @@ public class HeroMenu implements Serializable {
         System.out.println("Hero Created!");
     }
 
+    public static void checkName(String name){
+        test = true;
+        for (HeroesAbstract h : stats) {
+            if (name.equalsIgnoreCase(h.getName())) {
+                test = false;
+                System.out.println("Hero already exists!");
+            }
+        }
+        
+    }
+    
+    
 }
