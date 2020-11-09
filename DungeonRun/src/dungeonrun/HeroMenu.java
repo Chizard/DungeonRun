@@ -8,7 +8,7 @@ public class HeroMenu implements Serializable {
 
     static Scanner sc = new Scanner(System.in);
     static ArrayList<HeroesAbstract> stats = new ArrayList<>();         // Komma på hur vi sparar både typ av hjälte och valt namn
-    static boolean test = true;
+    static boolean checkName = true;
     
     public static void chooseHero() {
 
@@ -25,7 +25,7 @@ public class HeroMenu implements Serializable {
         if (userInput == 1) {
             Knight.stats();
             boolean confirm = confirmHero();
-            if (confirm == true) {
+            if (confirm == true && checkName(name) == true) {
                 String name = name();
                 String role = "Knight";
                 HeroesAbstract knight = new Knight(5, 9, 6, 4, name, role);
@@ -180,15 +180,15 @@ public class HeroMenu implements Serializable {
         System.out.println("Hero Created!");
     }
 
-    public static void checkName(String name){
-        test = true;
+    public static boolean checkName(String name){
+        checkName = true;
         for (HeroesAbstract h : stats) {
-            if (name.equalsIgnoreCase(h.getName())) {
-                test = false;
+            if (name.equalsIgnoreCase(name)) {
+                checkName = false;
                 System.out.println("Hero already exists!");
             }
         }
-        
+        return checkName;
     }
     
     
