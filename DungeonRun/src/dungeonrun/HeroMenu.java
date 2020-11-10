@@ -9,7 +9,7 @@ public class HeroMenu implements Serializable {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<HeroesAbstract> stats = new ArrayList<>();         // Komma på hur vi sparar både typ av hjälte och valt namn
     static boolean checkName = true;
-    
+
     public static void chooseHero() {
 
         System.out.println("                      =============== ");
@@ -66,53 +66,6 @@ public class HeroMenu implements Serializable {
 
         }
 
-//        switch (userInput) {
-//            case 1:
-//                Knight.stats();
-//                int confirmK = confirmHero();
-//                String nameK = "";
-//
-//                if (confirmK != 1) {
-//                    break;
-//                } else {
-//                    nameK = name();
-//                    HeroesAbstract knight = new Knight(5, 9, 6, 4, nameK);
-//                    stats.add(knight);
-//                    break;
-//                }
-//
-//            case 2:
-//                Wizard.stats();
-//                int confirmW = confirmHero();
-//                String nameW = "";
-//
-//                if (confirmW != 1) {
-//                    break;
-//                } else {
-//                    nameW = name();
-//                    HeroesAbstract knight = new Knight(5, 9, 6, 4, nameW);
-//                    stats.add(knight);
-//                    break;
-//                }
-//
-//            case 3:
-//                Thief.stats();
-//                int confirmT = confirmHero();
-//                String nameT = "";
-//
-//                if (confirmT != 1) {
-//                    break;
-//                } else {
-//                    nameT = name();
-//                    HeroesAbstract knight = new Knight(5, 9, 6, 4, nameT);
-//                    stats.add(knight);
-//                    break;
-//                }
-//
-//            default:
-//                System.out.println("ERROR! Please enter 1, 2 or 3");
-//                chooseHero();
-//        }
     }
 
     public static void loadCharacter() {
@@ -120,7 +73,7 @@ public class HeroMenu implements Serializable {
             FileInputStream fis = new FileInputStream("CharacterList");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            stats= (ArrayList) ois.readObject();
+            stats = (ArrayList) ois.readObject();
 
             ois.close();
             fis.close();
@@ -162,7 +115,7 @@ public class HeroMenu implements Serializable {
     public static String name() {
         System.out.println("\nEnter name");
         String input = sc.nextLine();
-        
+
         return input;
     }
 
@@ -180,16 +133,15 @@ public class HeroMenu implements Serializable {
         System.out.println("Hero Created!");
     }
 
-    public static boolean checkName(String name){
-        checkName = true;
+    public static boolean checkName(String name) {
+         checkName = true;
         for (HeroesAbstract h : stats) {
-            if (name.equalsIgnoreCase(name)) {
+            if (name.equalsIgnoreCase(h.getName())) {
                 checkName = false;
                 System.out.println("Hero already exists!");
             }
         }
         return checkName;
     }
-    
-    
+
 }
