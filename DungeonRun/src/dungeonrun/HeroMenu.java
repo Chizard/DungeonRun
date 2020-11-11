@@ -25,8 +25,8 @@ public class HeroMenu implements Serializable {
         if (userInput == 1) {
             Knight.stats();
             boolean confirm = confirmHero();
+            String name = name();
             if (confirm == true && checkName(name) == true) {
-                String name = name();
                 String role = "Knight";
                 HeroesAbstract knight = new Knight(5, 9, 6, 4, name, role);
                 stats.add(knight);
@@ -39,8 +39,8 @@ public class HeroMenu implements Serializable {
         } else if (userInput == 2) {
             Wizard.stats();
             boolean confirm = confirmHero();
-            if (confirm == true) {
-                String name = name();
+            String name = name();
+            if (confirm == true && checkName(name) == true) {
                 String role = "Wizard";
                 HeroesAbstract wizard = new Wizard(5, 9, 6, 4, name, role);
                 stats.add(wizard);
@@ -51,8 +51,8 @@ public class HeroMenu implements Serializable {
         } else if (userInput == 3) {
             Thief.stats();
             boolean confirm = confirmHero();
-            if (confirm == true) {
-                String name = name();
+            String name = name();
+            if (confirm == true && checkName(name) == true) {
                 String role = "Thief";
                 HeroesAbstract thief = new Thief(5, 9, 6, 4, name, role);
                 stats.add(thief);
@@ -134,12 +134,14 @@ public class HeroMenu implements Serializable {
     }
 
     public static boolean checkName(String name) {
-         checkName = true;
+        checkName = true;
         for (HeroesAbstract h : stats) {
             if (name.equalsIgnoreCase(h.getName())) {
                 checkName = false;
                 System.out.println("Hero already exists!");
+
             }
+
         }
         return checkName;
     }
