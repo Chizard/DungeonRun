@@ -26,8 +26,8 @@ public class HeroMenu implements Serializable {
             Knight.stats();
             boolean confirm = confirmHero();
             String name = name();
+            String role = "Knight";
             if (confirm == true && checkName(name) == true) {
-                String role = "Knight";
                 HeroesAbstract knight = new Knight(5, 9, 6, 4, name, role);
                 stats.add(knight);
                 checkName(name);
@@ -122,7 +122,7 @@ public class HeroMenu implements Serializable {
     public static void saveHero() {
 
         try {
-            FileOutputStream fos = new FileOutputStream("CharacterList");           // Ta bort ,true senare. Samma som med 117.
+            FileOutputStream fos = new FileOutputStream("CharacterList");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(stats);
             oos.close();
@@ -144,6 +144,17 @@ public class HeroMenu implements Serializable {
 
         }
         return checkName;
+    }
+
+    public static HeroesAbstract selectHero(String hero) {
+
+        for (HeroesAbstract c : stats) {
+            if (hero.equals(c.getName())) {
+                return c;
+            }
+
+        }
+        return null;
     }
 
 }
