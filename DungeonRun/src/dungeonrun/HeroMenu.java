@@ -50,7 +50,7 @@ public class HeroMenu implements Serializable {
             String name = name();
             if (confirm == true && checkName(name) == true) {
                 String role = "Wizard";
-                Heroes wizard = new Wizard(5, 9, 6, 4, name, role);
+                Heroes wizard = new Wizard(6, 4, 9, 5, name, role);
                 heroes.add(wizard);
                 saveHero();
                 randomMonster();
@@ -63,7 +63,7 @@ public class HeroMenu implements Serializable {
             String name = name();
             if (confirm == true && checkName(name) == true) {
                 String role = "Thief";
-                Heroes thief = new Thief(5, 9, 6, 4, name, role);
+                Heroes thief = new Thief(7, 5, 5, 7, name, role);
                 heroes.add(thief);
                 saveHero();
                 randomMonster();
