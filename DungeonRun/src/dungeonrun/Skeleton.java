@@ -1,12 +1,8 @@
 package dungeonrun;
 
-public class Skeleton {
-    
-    
-    int skeletonInitiative = 4;
-    int skeletonHealth = 2;
-    int skeletonAttack = 3;
-    int skeletonAgility = 3;
-    
-    //commonality = 15%
+public class Skeleton extends Monsters { //
+
+    public Skeleton(int initiative, int attack, int health, int agility, String name) {
+        super(initiative, attack, health, agility, name);
+    }
 }

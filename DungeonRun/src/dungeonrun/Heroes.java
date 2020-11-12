@@ -2,7 +2,7 @@ package dungeonrun;
 
 import java.io.*;
 
-public abstract class HeroesAbstract implements Serializable {
+public abstract class Heroes extends Creatures implements Serializable {
 
     private int initiative;
     private int health;
@@ -12,7 +12,7 @@ public abstract class HeroesAbstract implements Serializable {
     private String role;
     private int treasure;
 
-    public HeroesAbstract(int initiative, int health, int attack, int agility, String name, String role) {
+    public Heroes(int initiative, int health, int attack, int agility, String name, String role) {
         this.initiative = initiative;
         this.health = health;
         this.attack = attack;
@@ -32,6 +32,38 @@ public abstract class HeroesAbstract implements Serializable {
 
     public static void stats() {
         System.out.println("Nu blev det fel");
+    }
+
+    public int getInitiative() {
+        return initiative;
+    }
+
+    public void setInitiative(int initiative) {
+        this.initiative = initiative;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
 
     @Override

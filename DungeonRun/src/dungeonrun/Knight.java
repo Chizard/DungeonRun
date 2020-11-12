@@ -2,7 +2,7 @@ package dungeonrun;
 
 import java.io.*;
 
-public class Knight extends HeroesAbstract implements Serializable{
+public class Knight extends Heroes implements Serializable{
 
     public Knight(int initiative, int health, int attack, int agility, String name, String role) {
         super(initiative, health, attack, agility, name, role);

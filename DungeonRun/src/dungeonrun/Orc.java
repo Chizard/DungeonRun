@@ -1,11 +1,9 @@
 package dungeonrun;
 
-public class Orc {
-    
-    int orcInitiative = 6;
-    int orcHealth = 3;
-    int orcAttack = 4;
-    int orcAgility = 4;
-    
-    //commonality = 10%
+public class Orc extends Monsters { //
+
+    public Orc(int initiative, int attack, int health, int agility, String name) {
+        super(initiative, attack, health, agility, name);
+    }
+
 }

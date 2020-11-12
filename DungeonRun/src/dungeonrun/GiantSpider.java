@@ -1,12 +1,10 @@
 package dungeonrun;
 
-public class GiantSpider {
-    
-    int spiderInitiative = 7;
-    int spiderHealth = 1;
-    int spiderAttack = 2;
-    int spiderAgility = 3;
-    
-    
-    //commonality = 20%
+public class GiantSpider extends Monsters { //
+
+    public GiantSpider(int initiative, int attack, int health, int agility, String name) {
+        super(initiative, attack, health, agility, name);
+
+    }
+
 }

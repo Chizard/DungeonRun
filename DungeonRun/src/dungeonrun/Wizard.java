@@ -1,6 +1,6 @@
 package dungeonrun;
 
-public class Wizard extends HeroesAbstract{
+public class Wizard extends Heroes{
 
     public Wizard(int initiative, int health, int attack, int agility, String name, String role) {
         super(initiative, health, attack, agility, name, role);

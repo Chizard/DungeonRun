@@ -1,6 +1,6 @@
 package dungeonrun;
 
-public class Thief extends HeroesAbstract {
+public class Thief extends Heroes{
 
     public Thief(int initiative, int health, int attack, int agility, String name, String role) {
         super(initiative, health, attack, agility, name, role);

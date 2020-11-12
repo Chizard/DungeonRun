@@ -1,11 +1,9 @@
 package dungeonrun;
 
-public class Troll {
+public class Troll extends Monsters {
     
-    int trollInitiative = 2;
-    int trollHealth = 4;
-    int trollAttack = 7;
-    int trollAgility = 2;
-    
-    //commonality = 5%
+    public Troll(int initiative, int attack, int health, int agility, String name) {
+        super(initiative, attack, health, agility, name);
+    }
+   
 }
