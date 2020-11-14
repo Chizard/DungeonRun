@@ -1,13 +1,13 @@
 package dungeonrun;
 
-public class Wizard extends Heroes{
+public class Wizard extends Heroes {
 
-    public Wizard(int initiative, int health, int attack, int agility, String name, String role) {
-        super(initiative, health, attack, agility, name, role);
+    public Wizard(int initiative, int attack, int health, int agility, String name, int type, int totalInitiative) {
+        super(initiative, attack, health, agility, name, type, totalInitiative);
     }
 
     public static void stats() {
- 
+
         System.out.println("                    ____ ");
         System.out.println("                  .'* *.'");
         System.out.println("               __/_*_*(_");
@@ -30,7 +30,7 @@ public class Wizard extends Heroes{
         System.out.println("     _.-'    /     Bb     '-. '-._ ");
         System.out.println(" _.-'       |      BBb       '-.  '-. ");
         System.out.println("(________mrf\\____.dBBBb.________)____)");
-         
-}
+
+    }
 
 }

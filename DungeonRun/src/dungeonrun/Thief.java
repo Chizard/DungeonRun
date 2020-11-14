@@ -1,13 +1,13 @@
 package dungeonrun;
 
-public class Thief extends Heroes{
+public class Thief extends Heroes {
 
-    public Thief(int initiative, int health, int attack, int agility, String name, String role) {
-        super(initiative, health, attack, agility, name, role);
+    public Thief(int initiative, int attack, int health, int agility, String name, int type, int totalInitiative) {
+        super(initiative, attack, health, agility, name, type, totalInitiative);
     }
 
     public static void stats() {
-  
+
         System.out.println("        _________");
         System.out.println("     ,''         ``.");
         System.out.println("    /               \\");
@@ -27,7 +27,6 @@ public class Thief extends Heroes{
         System.out.println("  \\'--|___((_))___|--|/");
         System.out.println("   |\\_|-_ \\\\|//__-|_/ |");
 
-
     }
-    
+
 }
