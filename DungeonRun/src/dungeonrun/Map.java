@@ -1,6 +1,5 @@
 package dungeonrun;
 
-import java.awt.Color;
 import java.util.*;
 
 public class Map {
@@ -13,34 +12,63 @@ public class Map {
     String ANSI_BLUE = "\033[34;1m";
     String ANSI_CYAN = "\033[36;1m";
     String ANSI_WHITE = "\033[37;1m";
-    static Scanner input = new Scanner(System.in);
-
-    //static ArrayList<Monsters> monsters = new ArrayList<>();
+    Scanner input = new Scanner(System.in);
     int mapChoice;
     int position = 0;
+    int treasurePoints;
     int[][] mapSmall = new int[4][4];
     int[][] mapMedium = new int[5][5];
     int[][] mapLarge = new int[8][8];
 
     public void welcomeMessage() {
+        System.out.println(ANSI_YELLOW + "  .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:." + ANSI_RESET);
+        System.out.println();
+        System.out.println("           _.--\"\"\"\"\"--._");
+        System.out.println("           /                \\         WELCOME TO THE MAP ");
+        System.out.println("          ;                   ;       ******************");
+        System.out.println("          |                   |      (  )");
+        System.out.println("          |                   |     ( ) ");
+        System.out.println("          ;                   ;   ( )");
+        System.out.println("          \\ (`'--,    ,--'`) / ()");
+        System.out.println("          \\ \\  _ )  ( _  / /");
+        System.out.println("           ) )(')/    \\(')( (");
+        System.out.println("          (_ `\"\"` /\\  `\"\"´)");
+        System.out.println("           \\`\"-, /  \\ ,-\"`/");
+        System.out.println("            \\ //  `\"\"` \\ //`");
+        System.out.println("             |/\\/\\/\\/\\/\\/|");
+        System.out.println("              |\\       //|");
+        System.out.println("              ;||/\\/\\/\\||");
+        System.out.println("               \\`-`--`-`/");
+        System.out.println("                \\      /");
+        System.out.println("                 ',__,'");
+        System.out.println("                  q__p");
+        System.out.println("                  q__p");
+        System.out.println("                  q__p");
+        System.out.println("                  q__p");
+        System.out.println();
+
         System.out.println("  _^__                                                                __^__");
         System.out.println("( ___ )--------------------------------------------------------------( ___ )");
-        System.out.println(" | / |             The adventure will follow a map.                   | \\ |");
-        System.out.println(" | / |      In each room of the map something may occur,              | \\ |");
-        System.out.println(" | / |       either one or multiple monsters may appear,              | \\ |");
-        System.out.println(" | / |             and/or treasures will be found.                    | \\ |");
-        System.out.println(" | / | Everything is random, no one knows exactly what might happen.  | \\ |");
-        System.out.println(" | / |       After entered room, the room will appear as a 0,         | \\ |");
-        System.out.println(" | / |        meaning that the room has already been visited.         | \\ |");
-        System.out.println(" | / |                                                                | \\ |");
-        System.out.println(" | / |                      Good luck!                                | \\ |");
-        System.out.println(" |___|                                                                |____|");
-        System.out.println("(_____)--------------------------------------------------------------(_____)");
+        System.out.println(" | / |             The adventure will follow a map.                  | \\ |");
+        System.out.println(" | / |      In each room of the map something may occur,             | \\ |");
+        System.out.println(" | / |       either one or multiple monsters may appaer,             | \\ |");
+        System.out.println(" | / |             and/or treasures will be found.                   | \\ |");
+        System.out.println(" | / | Everything is random, no one knows exactly what might happen. | \\ |");
+        System.out.println(" | / |       After entered room, the room will appear as a 0,        | \\ |");
+        System.out.println(" | / |        meaning that the room has already been visited.        | \\ |");
+        System.out.println(" | / |                                                               | \\ |");
+        System.out.println(" | / |         When you have won all fights and visited              | \\ |");
+        System.out.println(" | / |       all rooms on the map, you have won the game.            | \\ |");
+        System.out.println(" | / |   The game may also end if you get defeated during the game.  | \\ |");
+        System.out.println(" | / |    You will also have the choice to leave the map if needed.  | \\ |");
+        System.out.println(" | / |                                                               | \\ |");
+        System.out.println(" |___|                         Good luck!                            |___|");
+        System.out.println("(_____)-------------------------------------------------------------(_____)");
         System.out.println();
 
     }
 
-    public void exitFromMap() { //OBS Lägg in huvudmeny-metod
+    public void exitFromMap() { //kallar på MAINDungeonRun.homeInput(MAINDungeonRun.home());
 
         System.out.println("Do you want to return to main menu, please enter Y/N; ");
         char choice;
@@ -48,7 +76,7 @@ public class Map {
         if (choice == 'Y' || choice == 'y') {
             MAINDungeonRun.homeInput(MAINDungeonRun.home());
         }
-    }
+    }//kallar på MAINDungeonRun.homeInput(MAINDungeonRun.home());
 
     public int selectMap() {
         System.out.println(ANSI_CYAN + "You can choose between the following adventures: " + ANSI_RESET);
@@ -261,6 +289,54 @@ public class Map {
         System.out.println("---------------------------------------");
     }
 
+    public boolean ifVisited() { 
+        boolean ifVisited = false;
+        if (mapChoice == 1) {
+            int countNoNotZero = 0;
+            ifVisited = false;
+            for (int k = 0; k < mapSmall.length; k++) {
+                for (int l = 0; l < mapSmall.length; l++) {
+                    if (mapSmall[k][l] != position) {
+                        countNoNotZero++;
+                        if (countNoNotZero == 16) {
+                            ifVisited = true;
+                            System.out.println("Ohh no, you're back in an old room, please move out to the numbered rooms (no 0)!!");
+                        }
+                    }
+                }
+            }         
+        } else if (mapChoice == 2) {
+            int countNoNotZero = 0;
+            ifVisited = false;
+            for (int k = 0; k < mapMedium.length; k++) {
+                for (int l = 0; l < mapMedium.length; l++) {
+                    if (mapMedium[k][l] != position) {
+                        countNoNotZero++;
+                        if (countNoNotZero == 25) {
+                            ifVisited = true;
+                            System.out.println("Ohh no, you're back in an old room, please move out to the numbered rooms (no 0)!!");
+                        }
+                    }
+                }
+            }
+        } else if (mapChoice == 3) {
+            int countNoNotZero = 0;
+            ifVisited = false;
+            for (int k = 0; k < mapLarge.length; k++) {
+                for (int l = 0; l < mapLarge.length; l++) {
+                    if (mapLarge[k][l] != position) {
+                        countNoNotZero++;
+                        if (countNoNotZero == 64) {
+                            ifVisited = true;
+                            System.out.println("Ohh no, you're back in an old room, please move out to the numbered rooms (no 0)!!");
+                        }
+                    }
+                }
+            }
+        }
+        return ifVisited;
+    }
+
     public int choiceOfStartPosition() {
         boolean running = true;
 
@@ -275,7 +351,7 @@ public class Map {
                     System.out.println("Wrong input, please try again");
                 }
             } else if (mapChoice == 2) {
-                if ((position == 1) || (position == 5) || (position == 21) || (position == 25)) {
+                if ((position == 1) || (position == 5) || (position == 18) || (position == 22)) {
                     System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
                     return position;
                 } else {
@@ -295,41 +371,98 @@ public class Map {
         return position;
     }
 
-    public void visitedRoom() {  //KALLAR PÅ SMALL, MEDIUM EL LARGE och går vidare till choice of direction
+    public void visitedRoom() { //kallar på choiceOfDirectionMapSmall/medium/large & randomExit(); & Monster
         if (mapChoice == 1) {
-            visitedRoomSmall();
-            choiceOfDirectionMapSmall();
+            boolean confirm = ifVisited();
+            if (confirm == true) {
+                choiceOfDirectionMapSmall();
+            }
+            boolean tru = randomExit();
+            if (tru == true) {
+                visitedRoomSmall();  //som går vidare till choiceOfDirectionMapSmall();  som går vidare till visitedRoom();
+            }         
+            Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
+            if (Fight.FightState.player_died == finishState) {
+            return;                                                 // Bestäm vad som ska hända när spelaren dör
+            }
+            boolean truth = randomTreasure();
+            if (truth == true) {
+                System.out.println("********************************************************************");
+                System.out.println("Your total points of treasure is: " + treasurePoints);
+                System.out.println("********************************************************************");
+                System.out.println(" ");
+                //randomMonster(); //får ligga här sålänge bara för att testa
+                visitedRoomSmall();
+            } else {
+                visitedRoomSmall();
+            }
         } else if (mapChoice == 2) {
-            visitedRoomMedium();
-            choiceOfDirectionMapMedium();
+            boolean confirm = ifVisited();
+            if (confirm == true) {
+                choiceOfDirectionMapMedium();
+            }
+            boolean tru = randomExit();
+            if (tru == true) {
+                visitedRoomMedium();  //som SKA GÅ vidare till choiceOfDirectionMapMEDIUM();  som går vidare till visitedRoom();
+            }
+            Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
+            if (Fight.FightState.player_died == finishState) {
+            return;                                                 // Bestäm vad som ska hända när spelaren dör
+            }
+            boolean truth = randomTreasure();
+            if (truth == true) {
+                System.out.println("********************************************************************");
+                System.out.println("Your total points of treasure is: " + treasurePoints);
+                System.out.println("********************************************************************");
+                System.out.println(" ");
+                //randomMonster(); //får ligga här sålänge bara för att testa
+                visitedRoomMedium();
+            } else {
+                visitedRoomMedium();
+            }
         } else if (mapChoice == 3) {
-            visitedRoomLarge();
-            choiceOfDirectionMapLarge();
+            boolean confirm = ifVisited();
+            if (confirm == true) {
+                choiceOfDirectionMapLarge();
+            }
+            boolean tru = randomExit();
+            if (tru == true) {
+                visitedRoomLarge();  //som SKA GÅ vidare till choiceOfDirectionMapLARGE();  som går vidare till visitedRoom();
+            }
+            Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
+            if (Fight.FightState.player_died == finishState) {
+            return;                                                 // Bestäm vad som ska hända när spelaren dör
+            }
+            boolean truth = randomTreasure();
+            if (truth == true) {
+                System.out.println("********************************************************************");
+                System.out.println("Your total points of treasure is: " + treasurePoints);
+                System.out.println("********************************************************************");
+                System.out.println(" ");
+                //randomMonster(); //får ligga här sålänge bara för att testa
+                visitedRoomLarge();
+            } else {
+                visitedRoomLarge();
+            }
         }
-    } //KALLAR PÅ visitedRoom-small, medium, large och går vidare till choiceOfDirectionMap-Small, medium, large
+    }
 
-    public void visitedRoomSmall() { //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
-        //allRoomsDone();  denna funkar ej, 
-        Fight.FightState finishState = HeroMenu.startGame();                    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns
-        if (Fight.FightState.player_died == finishState) {
-            return;                                                             // Bestäm vad som ska hända när spelaren dör
-        }
-        randomTreasure();
-        randomExit();
+    public void visitedRoomSmall() { //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapSmall();
+
         for (int k = 0; k < mapSmall.length; k++) {
             for (int l = 0; l < mapSmall.length; l++) {
 
                 if (mapSmall[k][l] == position) {
                     mapSmall[k][l] = 0;
-                    //    System.out.println("fortsätt spelet " + mapSmall[k][l]); //kolla så det stämmer printout
                 }
             }
         }
-
+        allRoomsDone();     ///******obs kan vi flytta denna???
         int rows = 4;
         int columns = 4;
         int i, j;
-
+        System.out.println("********************************************************************");
+        System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
             System.out.println("------------------");
@@ -340,10 +473,10 @@ public class Map {
             System.out.println("");
         }
         System.out.println("------------------");
+        choiceOfDirectionMapSmall();    //testar att kalla på denna här för att få körschemat att funka
+    }//KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapSmall(); 
 
-    }//KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
-
-    public void choiceOfDirectionMapSmall() { //Kallar på visitedRoom metoden
+    public void choiceOfDirectionMapSmall() {
         int choice = 0;
         boolean isGameOn = true;
         System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
@@ -351,9 +484,6 @@ public class Map {
 
         if (position == 6) {
             System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -379,9 +509,6 @@ public class Map {
             }
         } else if (position == 7) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -405,9 +532,6 @@ public class Map {
             }
         } else if (position == 10) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -431,9 +555,6 @@ public class Map {
             }
         } else if ((position == 11)) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -457,9 +578,6 @@ public class Map {
             }
         } else if (position == 2) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -480,9 +598,6 @@ public class Map {
             }
         } else if (position == 3) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -503,9 +618,6 @@ public class Map {
             }
         } else if (position == 14) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -526,9 +638,6 @@ public class Map {
             }
         } else if (position == 15) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -549,9 +658,6 @@ public class Map {
             }
         } else if (position == 5) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -572,9 +678,6 @@ public class Map {
             }
         } else if (position == 9) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -595,9 +698,6 @@ public class Map {
             }
         } else if (position == 8) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -618,9 +718,6 @@ public class Map {
             }
         } else if (position == 12) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -641,9 +738,6 @@ public class Map {
             }
         } else if (position == 1) {
             System.out.println("South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -661,9 +755,6 @@ public class Map {
             }
         } else if (position == 4) {
             System.out.println("South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -681,9 +772,6 @@ public class Map {
             }
         } else if (position == 13) {
             System.out.println("North:1 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -701,9 +789,6 @@ public class Map {
             }
         } else if (position == 16) {
             System.out.println("North:1 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -720,251 +805,11 @@ public class Map {
                 position = 15;
             }
         }
-        //else {
-        // }
         visitedRoom();
-    }  //KALLAR I SLUTET PÅ VISITEDROOM
+    }  //KALLAR I SLUTET PÅ VISITEDROOM   
 
-//    public void choiceOfDirectionMapSmall() {
-//        int choice;
-//        System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-//        exitFromMap();
-//        System.out.println("From your current position you may choose from the following options");
-//
-//        if (position == 6) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 2;
-//            }
-//            if (choice == 2) {
-//                position = 10;
-//            }
-//            if (choice == 3) {
-//                position = 7;
-//            }
-//            if (choice == 4) {
-//                position = 5;
-//            }
-//        } else if (position == 7) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 3;
-//            }
-//            if (choice == 2) {
-//                position = 11;
-//            }
-//            if (choice == 3) {
-//                position = 8;
-//            }
-//            if (choice == 4) {
-//                position = 6;
-//            }
-//        } else if (position == 10) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 6;
-//            }
-//            if (choice == 2) {
-//                position = 14;
-//            }
-//            if (choice == 3) {
-//                position = 11;
-//            }
-//            if (choice == 4) {
-//                position = 9;
-//            }
-//        } else if ((position == 11)) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 7;
-//            }
-//            if (choice == 2) {
-//                position = 15;
-//            }
-//            if (choice == 3) {
-//                position = 12;
-//            }
-//            if (choice == 4) {
-//                position = 10;
-//            }
-//        } else if (position == 2) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 6;
-//            }
-//            if (choice == 3) {
-//                position = 3;
-//            }
-//            if (choice == 4) {
-//                position = 1;
-//            }
-//        } else if (position == 3) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 7;
-//            }
-//            if (choice == 3) {
-//                position = 4;
-//            }
-//            if (choice == 4) {
-//                position = 2;
-//            }
-//        } else if (position == 14) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 10;
-//            }
-//            if (choice == 3) {
-//                position = 15;
-//            }
-//            if (choice == 4) {
-//                position = 13;
-//            }
-//        } else if (position == 15) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 11;
-//            }
-//            if (choice == 3) {
-//                position = 16;
-//            }
-//            if (choice == 4) {
-//                position = 14;
-//            }
-//        } else if (position == 5) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 1;
-//            }
-//            if (choice == 2) {
-//                position = 9;
-//            }
-//            if (choice == 3) {
-//                position = 6;
-//            }
-//        } else if (position == 9) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 5;
-//            }
-//            if (choice == 2) {
-//                position = 13;
-//            }
-//            if (choice == 3) {
-//                position = 10;
-//            }
-//        } else if (position == 8) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 4;
-//            }
-//            if (choice == 2) {
-//                position = 12;
-//            }
-//            if (choice == 4) {
-//                position = 7;
-//            }
-//        } else if (position == 12) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 8;
-//            }
-//            if (choice == 2) {
-//                position = 16;
-//            }
-//            if (choice == 4) {
-//                position = 11;
-//            }
-//        } else if (position == 1) {
-//            System.out.println("South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 5;
-//            }
-//            if (choice == 3) {
-//                position = 2;
-//            }
-//        } else if (position == 4) {
-//            System.out.println("South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 8;
-//            }
-//            if (choice == 4) {
-//                position = 3;
-//            }
-//        } else if (position == 13) {
-//            System.out.println("North:1 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 9;
-//            }
-//            if (choice == 3) {
-//                position = 14;
-//            }
-//        } else if (position == 16) {
-//            System.out.println("North:1 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 12;
-//            }
-//            if (choice == 4) {
-//                position = 15;
-//            }
-//        }
-    //else {
-    // }
-//        visitedRoom();
-//    }  //KALLAR I SLUTET PÅ VISITEDROOM
-    public void visitedRoomMedium() {
-        //allRoomsDone();  denna funkar ej, 
-        HeroMenu.randomMonster();
-        randomTreasure();
-        randomExit();
+    public void visitedRoomMedium() { //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapMedium(); 
+        
         for (int k = 0; k < mapMedium.length; k++) {
             for (int l = 0; l < mapMedium.length; l++) {
 
@@ -973,11 +818,12 @@ public class Map {
                 }
             }
         }
-
+        allRoomsDone();     ///******obs kan vi flytta denna???
         int rows = 5;
         int columns = 5;
         int i, j;
-
+        System.out.println("********************************************************************");
+        System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
             System.out.println("------------------");
@@ -988,11 +834,10 @@ public class Map {
             System.out.println("");
         }
         System.out.println("------------------");
-    } //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
-
+        choiceOfDirectionMapMedium();
+    } //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapMedium();
+    
     public void choiceOfDirectionMapMedium() {  //kallar på visitedRoom
-        //int choice;
-
         int choice = 0;
         boolean isGameOn = true;
         System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
@@ -1000,9 +845,6 @@ public class Map {
 
         if (position == 7) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1027,9 +869,6 @@ public class Map {
             }
         } else if (position == 8) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1054,9 +893,6 @@ public class Map {
             }
         } else if (position == 9) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1081,9 +917,6 @@ public class Map {
             }
         } else if (position == 12) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1108,9 +941,6 @@ public class Map {
             }
         } else if (position == 13) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1135,9 +965,6 @@ public class Map {
             }
         } else if (position == 14) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1162,9 +989,6 @@ public class Map {
             }
         } else if (position == 17) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1189,9 +1013,6 @@ public class Map {
             }
         } else if (position == 18) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1216,9 +1037,6 @@ public class Map {
             }
         } else if (position == 19) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1243,9 +1061,6 @@ public class Map {
             }
         } else if (position == 2) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1266,10 +1081,6 @@ public class Map {
                 position = 1;
             }
         } else if (position == 3) {
-            System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             System.out.println("South:2, East:3 or West:4");;
             while (isGameOn) {
                 System.out.println("make your choice");
@@ -1292,9 +1103,6 @@ public class Map {
             }
         } else if (position == 4) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1316,9 +1124,6 @@ public class Map {
             }
         } else if (position == 22) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1340,9 +1145,6 @@ public class Map {
             }
         } else if (position == 23) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1364,9 +1166,6 @@ public class Map {
             }
         } else if (position == 24) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1388,10 +1187,6 @@ public class Map {
             }
         } else if (position == 6) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
-
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1412,9 +1207,6 @@ public class Map {
             }
         } else if (position == 11) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1436,9 +1228,6 @@ public class Map {
             }
         } else if (position == 16) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1460,9 +1249,6 @@ public class Map {
             }
         } else if (position == 10) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1484,9 +1270,6 @@ public class Map {
             }
         } else if (position == 15) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1508,9 +1291,6 @@ public class Map {
             }
         } else if (position == 20) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1532,9 +1312,6 @@ public class Map {
             }
         } else if (position == 1) {
             System.out.println("South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1553,9 +1330,6 @@ public class Map {
             }
         } else if (position == 5) {
             System.out.println("South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1574,9 +1348,6 @@ public class Map {
             }
         } else if (position == 21) {
             System.out.println("North:1 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1595,9 +1366,6 @@ public class Map {
             }
         } else if (position == 25) {
             System.out.println("North:1 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -1615,400 +1383,12 @@ public class Map {
                 position = 24;
             }
         }
+
         visitedRoom();
     }  //KALLAR I SLUTET PÅ VISITEDROOM
 
-//    public void choiceOfDirectionMapMedium() {  //kallar på visitedRoom
-//        int choice;
-//
-//        System.out.println("From your current position you may choose from the following options");
-//
-//        if (position == 7) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 2;
-//            }
-//            if (choice == 2) {
-//                position = 12;
-//            }
-//            if (choice == 3) {
-//                position = 8;
-//            }
-//            if (choice == 4) {
-//                position = 6;
-//            }
-//        } else if (position == 8) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 3;
-//            }
-//            if (choice == 2) {
-//                position = 13;
-//            }
-//            if (choice == 3) {
-//                position = 9;
-//            }
-//            if (choice == 4) {
-//                position = 7;
-//            }
-//        } else if (position == 9) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 4;
-//            }
-//            if (choice == 2) {
-//                position = 14;
-//            }
-//            if (choice == 3) {
-//                position = 10;
-//            }
-//            if (choice == 4) {
-//                position = 8;
-//            }
-//        } else if (position == 12) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 7;
-//            }
-//            if (choice == 2) {
-//                position = 17;
-//            }
-//            if (choice == 3) {
-//                position = 13;
-//            }
-//            if (choice == 4) {
-//                position = 11;
-//            }
-//        } else if (position == 13) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 8;
-//            }
-//            if (choice == 2) {
-//                position = 18;
-//            }
-//            if (choice == 3) {
-//                position = 14;
-//            }
-//            if (choice == 4) {
-//                position = 12;
-//            }
-//        } else if (position == 14) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 9;
-//            }
-//            if (choice == 2) {
-//                position = 19;
-//            }
-//            if (choice == 3) {
-//                position = 15;
-//            }
-//            if (choice == 4) {
-//                position = 13;
-//            }
-//        } else if (position == 17) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 12;
-//            }
-//            if (choice == 2) {
-//                position = 22;
-//            }
-//            if (choice == 3) {
-//                position = 18;
-//            }
-//            if (choice == 4) {
-//                position = 16;
-//            }
-//        } else if (position == 18) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 13;
-//            }
-//            if (choice == 2) {
-//                position = 23;
-//            }
-//            if (choice == 3) {
-//                position = 19;
-//            }
-//            if (choice == 4) {
-//                position = 17;
-//            }
-//        } else if (position == 19) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 14;
-//            }
-//            if (choice == 2) {
-//                position = 24;
-//            }
-//            if (choice == 3) {
-//                position = 20;
-//            }
-//            if (choice == 4) {
-//                position = 18;
-//            }
-//        } else if (position == 2) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 2) {
-//                position = 7;
-//            }
-//            if (choice == 3) {
-//                position = 3;
-//            }
-//            if (choice == 4) {
-//                position = 1;
-//            }
-//        } else if (position == 3) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 2) {
-//                position = 8;
-//            }
-//            if (choice == 3) {
-//                position = 4;
-//            }
-//            if (choice == 4) {
-//                position = 2;
-//            }
-//        } else if (position == 4) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 2) {
-//                position = 9;
-//            }
-//            if (choice == 3) {
-//                position = 5;
-//            }
-//            if (choice == 4) {
-//                position = 3;
-//            }
-//        } else if (position == 22) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 17;
-//            }
-//            if (choice == 3) {
-//                position = 23;
-//            }
-//            if (choice == 4) {
-//                position = 21;
-//            }
-//        } else if (position == 23) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 18;
-//            }
-//            if (choice == 3) {
-//                position = 24;
-//            }
-//            if (choice == 4) {
-//                position = 22;
-//            }
-//        } else if (position == 24) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 19;
-//            }
-//            if (choice == 3) {
-//                position = 25;
-//            }
-//            if (choice == 4) {
-//                position = 23;
-//            }
-//        } else if (position == 6) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 1;
-//            }
-//            if (choice == 2) {
-//                position = 11;
-//            }
-//            if (choice == 3) {
-//                position = 7;
-//            }
-//        } else if (position == 11) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 6;
-//            }
-//            if (choice == 2) {
-//                position = 16;
-//            }
-//            if (choice == 3) {
-//                position = 12;
-//            }
-//        } else if (position == 16) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 11;
-//            }
-//            if (choice == 2) {
-//                position = 21;
-//            }
-//            if (choice == 3) {
-//                position = 17;
-//            }
-//        } else if (position == 10) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 5;
-//            }
-//            if (choice == 2) {
-//                position = 15;
-//            }
-//            if (choice == 4) {
-//                position = 9;
-//            }
-//        } else if (position == 15) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 10;
-//            }
-//            if (choice == 2) {
-//                position = 20;
-//            }
-//            if (choice == 4) {
-//                position = 14;
-//            }
-//        } else if (position == 20) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//
-//            if (choice == 1) {
-//                position = 15;
-//            }
-//            if (choice == 2) {
-//                position = 25;
-//            }
-//            if (choice == 4) {
-//                position = 19;
-//            }
-//        } else if (position == 1) {
-//            System.out.println("South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 6;
-//            }
-//            if (choice == 3) {
-//                position = 2;
-//            }
-//        } else if (position == 5) {
-//            System.out.println("South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 10;
-//            }
-//            if (choice == 4) {
-//                position = 4;
-//            }
-//        } else if (position == 21) {
-//            System.out.println("North:1 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 16;
-//            }
-//            if (choice == 3) {
-//                position = 22;
-//            }
-//        } else if (position == 25) {
-//            System.out.println("North:1 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 20;
-//            }
-//            if (choice == 4) {
-//                position = 24;
-//            }
-//        }
-//
-//        visitedRoom();
-//    }  //KALLAR I SLUTET PÅ VISITEDROOM
-    public void visitedRoomLarge() {
-        //allRoomsDone();  denna funkar ej, 
-        HeroMenu.randomMonster();
-        randomTreasure();
-        randomExit();
+    public void visitedRoomLarge() {//KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapLarge();
+  
         for (int k = 0; k < mapLarge.length; k++) {
             for (int l = 0; l < mapLarge.length; l++) {
 
@@ -2017,11 +1397,12 @@ public class Map {
                 }
             }
         }
-
+        allRoomsDone();     ///******obs kan vi flytta denna???
         int rows = 8;
         int columns = 8;
         int i, j;
-
+        System.out.println("********************************************************************");
+        System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
             System.out.println("--------------------------------------");
@@ -2032,11 +1413,10 @@ public class Map {
             System.out.println("");
         }
         System.out.println("------------------------------------------");
-    } //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
+        choiceOfDirectionMapLarge();
+    } //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapLarge();
 
     public void choiceOfDirectionMapLarge() {
-        //int choice;
-
         int choice = 0;
         boolean isGameOn = true;
         System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
@@ -2044,9 +1424,6 @@ public class Map {
 
         if (position == 10) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2071,9 +1448,6 @@ public class Map {
             }
         } else if (position == 11) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2098,9 +1472,6 @@ public class Map {
             }
         } else if (position == 12) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2125,9 +1496,6 @@ public class Map {
             }
         } else if (position == 13) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2152,9 +1520,6 @@ public class Map {
             }
         } else if (position == 14) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2178,10 +1543,6 @@ public class Map {
                 position = 13;
             }
         } else if (position == 15) {
-            System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             System.out.println("North:1, South:2, East:3 or West:4");;
             while (isGameOn) {
                 System.out.println("make your choice");
@@ -2207,9 +1568,6 @@ public class Map {
             }
         } else if (position == 18) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2234,9 +1592,6 @@ public class Map {
             }
         } else if (position == 19) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2261,9 +1616,6 @@ public class Map {
             }
         } else if (position == 20) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2288,9 +1640,6 @@ public class Map {
             }
         } else if (position == 21) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2315,9 +1664,6 @@ public class Map {
             }
         } else if (position == 22) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2342,9 +1688,6 @@ public class Map {
             }
         } else if (position == 23) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2369,9 +1712,6 @@ public class Map {
             }
         } else if (position == 26) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2396,9 +1736,6 @@ public class Map {
             }
         } else if (position == 27) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2423,9 +1760,6 @@ public class Map {
             }
         } else if (position == 28) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2450,9 +1784,6 @@ public class Map {
             }
         } else if (position == 29) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2477,9 +1808,6 @@ public class Map {
             }
         } else if (position == 30) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2504,9 +1832,6 @@ public class Map {
             }
         } else if (position == 31) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2531,9 +1856,6 @@ public class Map {
             }
         } else if (position == 34) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2558,9 +1880,6 @@ public class Map {
             }
         } else if (position == 35) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2585,9 +1904,6 @@ public class Map {
             }
         } else if (position == 36) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2612,9 +1928,6 @@ public class Map {
             }
         } else if (position == 37) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2639,9 +1952,6 @@ public class Map {
             }
         } else if (position == 38) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2666,9 +1976,6 @@ public class Map {
             }
         } else if (position == 39) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2693,9 +2000,6 @@ public class Map {
             }
         } else if (position == 42) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2720,9 +2024,6 @@ public class Map {
             }
         } else if (position == 43) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2747,9 +2048,6 @@ public class Map {
             }
         } else if (position == 44) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2774,9 +2072,6 @@ public class Map {
             }
         } else if (position == 45) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2801,9 +2096,6 @@ public class Map {
             }
         } else if (position == 46) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2828,9 +2120,6 @@ public class Map {
             }
         } else if (position == 47) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2855,9 +2144,6 @@ public class Map {
             }
         } else if (position == 50) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2882,9 +2168,6 @@ public class Map {
             }
         } else if (position == 51) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2909,9 +2192,6 @@ public class Map {
             }
         } else if (position == 52) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2936,9 +2216,6 @@ public class Map {
             }
         } else if (position == 53) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2963,9 +2240,6 @@ public class Map {
             }
         } else if (position == 54) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -2990,9 +2264,6 @@ public class Map {
             }
         } else if (position == 55) {
             System.out.println("North:1, South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3017,9 +2288,6 @@ public class Map {
             }
         } else if (position == 2) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3041,9 +2309,6 @@ public class Map {
             }
         } else if (position == 3) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3065,9 +2330,6 @@ public class Map {
             }
         } else if (position == 4) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3089,9 +2351,6 @@ public class Map {
             }
         } else if (position == 5) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3113,9 +2372,6 @@ public class Map {
             }
         } else if (position == 6) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3137,9 +2393,6 @@ public class Map {
             }
         } else if (position == 7) {
             System.out.println("South:2, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3161,9 +2414,6 @@ public class Map {
             }
         } else if (position == 58) {
             System.out.println("North:1,East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3185,9 +2435,6 @@ public class Map {
             }
         } else if (position == 59) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3209,9 +2456,6 @@ public class Map {
             }
         } else if (position == 60) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3233,9 +2477,6 @@ public class Map {
             }
         } else if (position == 61) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3257,9 +2498,6 @@ public class Map {
             }
         } else if (position == 62) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3281,9 +2519,6 @@ public class Map {
             }
         } else if (position == 63) {
             System.out.println("North:1, East:3 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3305,9 +2540,6 @@ public class Map {
             }
         } else if (position == 9) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3329,9 +2561,6 @@ public class Map {
             }
         } else if (position == 17) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3353,9 +2582,6 @@ public class Map {
             }
         } else if (position == 25) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3377,9 +2603,6 @@ public class Map {
             }
         } else if (position == 33) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3401,9 +2624,6 @@ public class Map {
             }
         } else if (position == 41) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3425,9 +2645,6 @@ public class Map {
             }
         } else if (position == 49) {
             System.out.println("North:1, South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3449,9 +2666,6 @@ public class Map {
             }
         } else if (position == 16) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3473,9 +2687,6 @@ public class Map {
             }
         } else if (position == 24) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3497,9 +2708,6 @@ public class Map {
             }
         } else if (position == 32) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3521,9 +2729,6 @@ public class Map {
             }
         } else if (position == 40) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3545,9 +2750,6 @@ public class Map {
             }
         } else if (position == 48) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3569,9 +2771,6 @@ public class Map {
             }
         } else if (position == 56) {
             System.out.println("North:1, South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3593,9 +2792,6 @@ public class Map {
             }
         } else if (position == 1) {
             System.out.println("South:2 or East:3");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3614,9 +2810,6 @@ public class Map {
             }
         } else if (position == 8) {
             System.out.println("South:2 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3635,9 +2828,6 @@ public class Map {
             }
         } else if (position == 57) {
             System.out.println("North:1 or East:3 ");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3656,9 +2846,6 @@ public class Map {
             }
         } else if (position == 64) {
             System.out.println("North:1 or West:4");
-            System.out.println("Make your choice");
-            choice = input.nextInt();
-            input.nextLine();
             while (isGameOn) {
                 System.out.println("make your choice");
                 choice = input.nextInt();
@@ -3676,1102 +2863,117 @@ public class Map {
                 position = 63;
             }
         }
+
         visitedRoom();
     } //KALLAR I SLUTET PÅ VISITEDROOM
 
-//    public void choiceOfDirectionMapLarge() {
-//        int choice;
-//
-//        System.out.println("From your current position you may choose from the following options");
-//
-//        if (position == 10) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 2;
-//            }
-//            if (choice == 2) {
-//                position = 18;
-//            }
-//            if (choice == 3) {
-//                position = 11;
-//            }
-//            if (choice == 4) {
-//                position = 9;
-//            }
-//        } else if (position == 11) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 3;
-//            }
-//            if (choice == 2) {
-//                position = 19;
-//            }
-//            if (choice == 3) {
-//                position = 12;
-//            }
-//            if (choice == 4) {
-//                position = 10;
-//            }
-//        } else if (position == 12) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 4;
-//            }
-//            if (choice == 2) {
-//                position = 20;
-//            }
-//            if (choice == 3) {
-//                position = 13;
-//            }
-//            if (choice == 4) {
-//                position = 11;
-//            }
-//        } else if (position == 13) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 5;
-//            }
-//            if (choice == 2) {
-//                position = 21;
-//            }
-//            if (choice == 3) {
-//                position = 14;
-//            }
-//            if (choice == 4) {
-//                position = 12;
-//            }
-//        } else if (position == 14) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 6;
-//            }
-//            if (choice == 2) {
-//                position = 22;
-//            }
-//            if (choice == 3) {
-//                position = 15;
-//            }
-//            if (choice == 4) {
-//                position = 13;
-//            }
-//        } else if (position == 15) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 7;
-//            }
-//            if (choice == 2) {
-//                position = 23;
-//            }
-//            if (choice == 3) {
-//                position = 16;
-//            }
-//            if (choice == 4) {
-//                position = 14;
-//            }
-//        } else if (position == 18) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 10;
-//            }
-//            if (choice == 2) {
-//                position = 26;
-//            }
-//            if (choice == 3) {
-//                position = 19;
-//            }
-//            if (choice == 4) {
-//                position = 17;
-//            }
-//        } else if (position == 19) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 11;
-//            }
-//            if (choice == 2) {
-//                position = 27;
-//            }
-//            if (choice == 3) {
-//                position = 20;
-//            }
-//            if (choice == 4) {
-//                position = 18;
-//            }
-//        } else if (position == 20) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 12;
-//            }
-//            if (choice == 2) {
-//                position = 28;
-//            }
-//            if (choice == 3) {
-//                position = 21;
-//            }
-//            if (choice == 4) {
-//                position = 19;
-//            }
-//        } else if (position == 21) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 13;
-//            }
-//            if (choice == 2) {
-//                position = 29;
-//            }
-//            if (choice == 3) {
-//                position = 22;
-//            }
-//            if (choice == 4) {
-//                position = 20;
-//            }
-//        } else if (position == 22) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 14;
-//            }
-//            if (choice == 2) {
-//                position = 30;
-//            }
-//            if (choice == 3) {
-//                position = 23;
-//            }
-//            if (choice == 4) {
-//                position = 21;
-//            }
-//        } else if (position == 23) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 15;
-//            }
-//            if (choice == 2) {
-//                position = 31;
-//            }
-//            if (choice == 3) {
-//                position = 24;
-//            }
-//            if (choice == 4) {
-//                position = 22;
-//            }
-//        } else if (position == 26) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 18;
-//            }
-//            if (choice == 2) {
-//                position = 34;
-//            }
-//            if (choice == 3) {
-//                position = 27;
-//            }
-//            if (choice == 4) {
-//                position = 25;
-//            }
-//        } else if (position == 27) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 19;
-//            }
-//            if (choice == 2) {
-//                position = 35;
-//            }
-//            if (choice == 3) {
-//                position = 28;
-//            }
-//            if (choice == 4) {
-//                position = 26;
-//            }
-//        } else if (position == 28) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 20;
-//            }
-//            if (choice == 2) {
-//                position = 36;
-//            }
-//            if (choice == 3) {
-//                position = 29;
-//            }
-//            if (choice == 4) {
-//                position = 27;
-//            }
-//        } else if (position == 29) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 21;
-//            }
-//            if (choice == 2) {
-//                position = 37;
-//            }
-//            if (choice == 3) {
-//                position = 30;
-//            }
-//            if (choice == 4) {
-//                position = 28;
-//            }
-//        } else if (position == 30) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 22;
-//            }
-//            if (choice == 2) {
-//                position = 38;
-//            }
-//            if (choice == 3) {
-//                position = 31;
-//            }
-//            if (choice == 4) {
-//                position = 29;
-//            }
-//        } else if (position == 31) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 23;
-//            }
-//            if (choice == 2) {
-//                position = 39;
-//            }
-//            if (choice == 3) {
-//                position = 32;
-//            }
-//            if (choice == 4) {
-//                position = 30;
-//            }
-//        } else if (position == 34) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 26;
-//            }
-//            if (choice == 2) {
-//                position = 42;
-//            }
-//            if (choice == 3) {
-//                position = 35;
-//            }
-//            if (choice == 4) {
-//                position = 33;
-//            }
-//        } else if (position == 35) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 27;
-//            }
-//            if (choice == 2) {
-//                position = 43;
-//            }
-//            if (choice == 3) {
-//                position = 36;
-//            }
-//            if (choice == 4) {
-//                position = 34;
-//            }
-//        } else if (position == 36) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 28;
-//            }
-//            if (choice == 2) {
-//                position = 44;
-//            }
-//            if (choice == 3) {
-//                position = 37;
-//            }
-//            if (choice == 4) {
-//                position = 35;
-//            }
-//        } else if (position == 37) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 29;
-//            }
-//            if (choice == 2) {
-//                position = 45;
-//            }
-//            if (choice == 3) {
-//                position = 38;
-//            }
-//            if (choice == 4) {
-//                position = 36;
-//            }
-//        } else if (position == 38) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 30;
-//            }
-//            if (choice == 2) {
-//                position = 46;
-//            }
-//            if (choice == 3) {
-//                position = 39;
-//            }
-//            if (choice == 4) {
-//                position = 37;
-//            }
-//        } else if (position == 39) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 31;
-//            }
-//            if (choice == 2) {
-//                position = 47;
-//            }
-//            if (choice == 3) {
-//                position = 40;
-//            }
-//            if (choice == 4) {
-//                position = 38;
-//            }
-//        } else if (position == 42) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 34;
-//            }
-//            if (choice == 2) {
-//                position = 50;
-//            }
-//            if (choice == 3) {
-//                position = 43;
-//            }
-//            if (choice == 4) {
-//                position = 41;
-//            }
-//        } else if (position == 43) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 35;
-//            }
-//            if (choice == 2) {
-//                position = 51;
-//            }
-//            if (choice == 3) {
-//                position = 44;
-//            }
-//            if (choice == 4) {
-//                position = 42;
-//            }
-//        } else if (position == 44) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 36;
-//            }
-//            if (choice == 2) {
-//                position = 52;
-//            }
-//            if (choice == 3) {
-//                position = 45;
-//            }
-//            if (choice == 4) {
-//                position = 43;
-//            }
-//        } else if (position == 45) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 37;
-//            }
-//            if (choice == 2) {
-//                position = 53;
-//            }
-//            if (choice == 3) {
-//                position = 46;
-//            }
-//            if (choice == 4) {
-//                position = 44;
-//            }
-//        } else if (position == 46) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 38;
-//            }
-//            if (choice == 2) {
-//                position = 54;
-//            }
-//            if (choice == 3) {
-//                position = 47;
-//            }
-//            if (choice == 4) {
-//                position = 45;
-//            }
-//        } else if (position == 47) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 39;
-//            }
-//            if (choice == 2) {
-//                position = 55;
-//            }
-//            if (choice == 3) {
-//                position = 48;
-//            }
-//            if (choice == 4) {
-//                position = 46;
-//            }
-//        } else if (position == 50) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 42;
-//            }
-//            if (choice == 2) {
-//                position = 58;
-//            }
-//            if (choice == 3) {
-//                position = 51;
-//            }
-//            if (choice == 4) {
-//                position = 49;
-//            }
-//        } else if (position == 51) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 43;
-//            }
-//            if (choice == 2) {
-//                position = 59;
-//            }
-//            if (choice == 3) {
-//                position = 52;
-//            }
-//            if (choice == 4) {
-//                position = 50;
-//            }
-//        } else if (position == 52) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 44;
-//            }
-//            if (choice == 2) {
-//                position = 60;
-//            }
-//            if (choice == 3) {
-//                position = 53;
-//            }
-//            if (choice == 4) {
-//                position = 51;
-//            }
-//        } else if (position == 53) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 45;
-//            }
-//            if (choice == 2) {
-//                position = 61;
-//            }
-//            if (choice == 3) {
-//                position = 54;
-//            }
-//            if (choice == 4) {
-//                position = 52;
-//            }
-//        } else if (position == 54) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 46;
-//            }
-//            if (choice == 2) {
-//                position = 62;
-//            }
-//            if (choice == 3) {
-//                position = 55;
-//            }
-//            if (choice == 4) {
-//                position = 53;
-//            }
-//        } else if (position == 55) {
-//            System.out.println("North:1, South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 47;
-//            }
-//            if (choice == 2) {
-//                position = 63;
-//            }
-//            if (choice == 3) {
-//                position = 56;
-//            }
-//            if (choice == 4) {
-//                position = 54;
-//            }
-//        } else if (position == 2) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 10;
-//            }
-//            if (choice == 3) {
-//                position = 3;
-//            }
-//            if (choice == 4) {
-//                position = 1;
-//            }
-//        } else if (position == 3) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 11;
-//            }
-//            if (choice == 3) {
-//                position = 4;
-//            }
-//            if (choice == 4) {
-//                position = 2;
-//            }
-//        } else if (position == 4) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 12;
-//            }
-//            if (choice == 3) {
-//                position = 5;
-//            }
-//            if (choice == 4) {
-//                position = 3;
-//            }
-//        } else if (position == 5) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 13;
-//            }
-//            if (choice == 3) {
-//                position = 6;
-//            }
-//            if (choice == 4) {
-//                position = 4;
-//            }
-//        } else if (position == 6) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 14;
-//            }
-//            if (choice == 3) {
-//                position = 7;
-//            }
-//            if (choice == 4) {
-//                position = 5;
-//            }
-//        } else if (position == 7) {
-//            System.out.println("South:2, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 15;
-//            }
-//            if (choice == 3) {
-//                position = 8;
-//            }
-//            if (choice == 4) {
-//                position = 6;
-//            }
-//        } else if (position == 58) {
-//            System.out.println("North:1,East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 50;
-//            }
-//            if (choice == 3) {
-//                position = 59;
-//            }
-//            if (choice == 4) {
-//                position = 57;
-//            }
-//        } else if (position == 59) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 51;
-//            }
-//            if (choice == 3) {
-//                position = 60;
-//            }
-//            if (choice == 4) {
-//                position = 58;
-//            }
-//        } else if (position == 60) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 52;
-//            }
-//            if (choice == 3) {
-//                position = 61;
-//            }
-//            if (choice == 4) {
-//                position = 59;
-//            }
-//        } else if (position == 61) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 53;
-//            }
-//            if (choice == 3) {
-//                position = 62;
-//            }
-//            if (choice == 4) {
-//                position = 60;
-//            }
-//        } else if (position == 62) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 54;
-//            }
-//            if (choice == 3) {
-//                position = 63;
-//            }
-//            if (choice == 4) {
-//                position = 61;
-//            }
-//        } else if (position == 63) {
-//            System.out.println("North:1, East:3 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 55;
-//            }
-//            if (choice == 3) {
-//                position = 64;
-//            }
-//            if (choice == 4) {
-//                position = 62;
-//            }
-//        } else if (position == 9) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 1;
-//            }
-//            if (choice == 2) {
-//                position = 17;
-//            }
-//            if (choice == 3) {
-//                position = 10;
-//            }
-//        } else if (position == 17) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 9;
-//            }
-//            if (choice == 2) {
-//                position = 25;
-//            }
-//            if (choice == 3) {
-//                position = 18;
-//            }
-//        } else if (position == 25) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 17;
-//            }
-//            if (choice == 2) {
-//                position = 33;
-//            }
-//            if (choice == 3) {
-//                position = 26;
-//            }
-//        } else if (position == 33) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 25;
-//            }
-//            if (choice == 2) {
-//                position = 41;
-//            }
-//            if (choice == 3) {
-//                position = 34;
-//            }
-//        } else if (position == 41) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 33;
-//            }
-//            if (choice == 2) {
-//                position = 49;
-//            }
-//            if (choice == 3) {
-//                position = 42;
-//            }
-//        } else if (position == 49) {
-//            System.out.println("North:1, South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 41;
-//            }
-//            if (choice == 2) {
-//                position = 57;
-//            }
-//            if (choice == 3) {
-//                position = 50;
-//            }
-//        } else if (position == 16) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 8;
-//            }
-//            if (choice == 2) {
-//                position = 24;
-//            }
-//            if (choice == 4) {
-//                position = 15;
-//            }
-//        } else if (position == 24) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 16;
-//            }
-//            if (choice == 2) {
-//                position = 32;
-//            }
-//            if (choice == 4) {
-//                position = 23;
-//            }
-//        } else if (position == 32) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 24;
-//            }
-//            if (choice == 2) {
-//                position = 40;
-//            }
-//            if (choice == 4) {
-//                position = 31;
-//            }
-//        } else if (position == 40) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 32;
-//            }
-//            if (choice == 2) {
-//                position = 48;
-//            }
-//            if (choice == 4) {
-//                position = 39;
-//            }
-//        } else if (position == 48) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 40;
-//            }
-//            if (choice == 2) {
-//                position = 56;
-//            }
-//            if (choice == 4) {
-//                position = 47;
-//            }
-//        } else if (position == 56) {
-//            System.out.println("North:1, South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 48;
-//            }
-//            if (choice == 2) {
-//                position = 64;
-//            }
-//            if (choice == 4) {
-//                position = 55;
-//            }
-//        } else if (position == 1) {
-//            System.out.println("South:2 or East:3");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 9;
-//            }
-//            if (choice == 3) {
-//                position = 2;
-//            }
-//        } else if (position == 8) {
-//            System.out.println("South:2 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 2) {
-//                position = 16;
-//            }
-//            if (choice == 4) {
-//                position = 7;
-//            }
-//        } else if (position == 57) {
-//            System.out.println("North:1 or East:3 ");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 49;
-//            }
-//            if (choice == 3) {
-//                position = 58;
-//            }
-//        } else if (position == 64) {
-//            System.out.println("North:1 or West:4");
-//            System.out.println("Make your choice");
-//            choice = input.nextInt();
-//            input.nextLine();
-//            if (choice == 1) {
-//                position = 56;
-//            }
-//            if (choice == 4) {
-//                position = 63;
-//            }
-//        }
-//
-//        visitedRoom();
-//    } //KALLAR I SLUTET PÅ VISITEDROOM
-//    public void randomMonster() {
-//
-//        Random random = new Random();
-//        if (Math.random() * 100 < 20) {     //jättespindel 20, 
-//            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-//            System.out.println("Watch out, theres a Giantspider ahead!");
-//            Monsters gs1 = new GiantSpider(7, 10, 1, 3,"Giant Spider");
-//            monsters.add(gs1);
-//            //hittePaFight();//hittepåmetoder för test-körning
-//        }
-//        if (Math.random() * 100 < 15) {  //skelett 15  
-//            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-//            System.out.println("Watch out, theres a Skeleton ahead!");
-//            Monsters s1 = new Skeleton(4, 3, 2, 3,"Skeleton");
-//            monsters.add(s1);
-//            //hittePaFight();//hittepåmetoder för test-körning
-//        }
-//        if (Math.random() * 100 < 10) {   //orc 10
-//            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-//            System.out.println("Watch out, theres an Orc ahead!");
-//            Monsters o1 = new Orc(6, 4, 3, 4, "Orc");
-//            monsters.add(o1);
-//            //hittePaFight();//hittepåmetoder för test-körning
-//        }
-//        if (Math.random() * 100 < 5) {     //troll 5
-//            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-//            System.out.println("Watch out, theres a Troll ahead!");
-//            Monsters t1 = new Troll (02, 7, 4, 2, "Troll");
-//            monsters.add(t1);
-//            //hittePaFight();//hittepåmetoder för test-körning
-//        }
-//        
-//        if(monsters.size()> 0){
-//           // battle();
-//            System.out.println("Battle begins");
-//        } else{
-//            System.out.println("No monsters");
-//        }
-//    }  //OBS KALLA PÅ MONSTER OCH FIGHTEN
-    public void randomTreasure() {  //lägg in i fightdelen, om vinna så plocka 
-        //ev.skatt, poäng ska läggas in
-        //arrayTreasure.clear(); ska ta bort alla skatter så fort array finns
+    public boolean randomTreasure() {  //lägg in i fightdelen, om vinna så plocka ev.skatt
+        boolean randomTreasure = false;
         Random random = new Random();
-        if (Math.random() * 100 < 40) {     //lösa slantar 40, 
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a coin!");
+        if (Math.random() * 100 < 40) {     //lösa slanatar 40, 
+            randomTreasure = true;
+            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("Congrats! You won a coin! Its worth 2 points!");
+            int coinPoints = 2;
+            treasurePoints += coinPoints;
         }
         if (Math.random() * 100 < 20) {  //pengapung 20   
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a purse with coins in it!");
+            randomTreasure = true;
+            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("Congrats! You won a purse with coins in it! Its worth 6 points!");
+            int pursePoints = 6;
+            treasurePoints += pursePoints;
         }
         if (Math.random() * 100 < 15) {   //gold jewelry 15
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won gold jewelry!");
+            randomTreasure = true;
+            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("Congrats! You won gold jewelry! Its worth 10 points!");
+            int goldPoints = 10;
+            treasurePoints += goldPoints;
         }
         if (Math.random() * 100 < 10) {     //ädelsten 10
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a precious stone");
+            randomTreasure = true;
+            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("Congrats! You won a precious stone! Its worth 14 points!");
+            int stonePoints = 14;
+            treasurePoints += stonePoints;
         }
         if (Math.random() * 100 < 5) {     //skattkista 5
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a small treasure chest");
+            randomTreasure = true;
+            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("Congrats! You won a small treasure chest! Its worth 20 points!");
+            int chestPoints = 20;
+            treasurePoints += chestPoints;
         }
+        return randomTreasure;
     }
 
-    public void randomExit() {  //OBS koppla till om monster el skatt dykt upp
+    public boolean randomExit() {  //OBS koppla till om monster el skatt dykt upp
+        boolean randomExit = false;
         char choice;
-        Random random = new Random();
-        if (Math.random() * 100 < 1) {     //
-            System.out.println("This is an exitroom,do you want to return to main "
-                    + "menu please enter Y/N?");
+        if (Math.random() * 100 < 20) { //hur stor % chans? 20%
+            randomExit = true;
+            System.out.println("________________________________________________________________");
+            System.out.println("\nThis is an exitroom,do you want to return to main "
+                    + "menu please enter Y/N?");           
             choice = input.next().charAt(0);
+            System.out.println("________________________________________________________________");
             if (choice == 'Y' || choice == 'y') {
                 MAINDungeonRun.homeInput(MAINDungeonRun.home());
             }
         }
+        return randomExit;
     } //OBS LÄGG IN EXITMETOD TILL HUVUDMENYN
 
     public void allRoomsDone() {
-        System.out.println("***************Nu ska jag kolla om alla rum är 0:ade");
-        for (int k = 0; k < mapSmall.length; k++) {
-            for (int l = 0; l < mapSmall.length; l++) {
+        int countVisitedRooms = 0;
+        int totalRooms = 0;
 
-                if (mapSmall[k][l] > 0) {
-                    System.out.println("============Nä de e inte o;ade");
-                } else {
-                    System.out.println("*************Alla rum är nollade");
+        if (mapChoice == 1) {
+            for (int k = 0; k < mapSmall.length; k++) {
+                for (int i = 0; i < mapSmall[k].length; i++) {
+                    if (mapSmall[k][i] <= 0) {
+                        countVisitedRooms++;  //denna hittar bara det 0:ade rummmet
+                    }
+                    totalRooms++; //denna räknar alla rummen i mapsmall 1-16  
                 }
             }
+            if (totalRooms == countVisitedRooms) {
+                System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
+                MAINDungeonRun.homeInput(MAINDungeonRun.home());
+            } else {
+                System.out.println("There are still rooms unvisited");
+            }
+        } else if (mapChoice == 2) {
+            for (int k = 0; k < mapMedium.length; k++) {
+                for (int i = 0; i < mapMedium[k].length; i++) {
+                    if (mapMedium[k][i] <= 0) {
+                        countVisitedRooms++;  //denna hittar bara det 0:ade rummmet
+                    }
+                    totalRooms++; //denna räknar alla rummen i mapMedium 1-25  
+                }
+            }
+            if (totalRooms == countVisitedRooms) {
+                System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
+                MAINDungeonRun.homeInput(MAINDungeonRun.home());
+            } else {
+                System.out.println("There are still rooms unvisited");
+            }
+        } else if (mapChoice == 3) {
+            for (int k = 0; k < mapLarge.length; k++) {
+                for (int i = 0; i < mapLarge[k].length; i++) {
+                    if (mapLarge[k][i] <= 0) {
+                        countVisitedRooms++;  //denna hittar bara det 0:ade rummmet
+                    }
+                    totalRooms++; //denna räknar alla rummen i mapLarge 1-65  
+                }
+            }
+            if (totalRooms == countVisitedRooms) {
+                System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
+                MAINDungeonRun.homeInput(MAINDungeonRun.home());
+            } else {
+                System.out.println("There are still rooms unvisited");
+            }
         }
-
-    }  //funkar ej, ska kolla med hjälp
-
-    //*******************************************************************************
+    } 
 }

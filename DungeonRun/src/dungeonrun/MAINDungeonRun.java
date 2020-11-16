@@ -79,7 +79,6 @@ public class MAINDungeonRun implements Serializable {
                 if (HeroMenu.chooseLoadedHeroes(HeroMenu.loadCharacter()) == true) {
                     System.out.println("Starting game!");
                 } else {
-                    //System.out.println("You need to choose a hero!");
                 }
 
                 break;
