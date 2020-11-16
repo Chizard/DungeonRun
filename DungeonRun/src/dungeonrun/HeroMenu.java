@@ -49,7 +49,6 @@ public class HeroMenu implements Serializable{
                 player = new Knight(5, 6, 9, 4, name, 1, 0);
                 heroes.add(player);
                 saveHero();
-                //randomMonster();
             } else {
                 chooseHero();
             }
@@ -63,7 +62,6 @@ public class HeroMenu implements Serializable{
                 player = new Wizard(6, 4, 9, 5, name, 1, 0);
                 heroes.add(player);
                 saveHero();
-                randomMonster();
             } else {
                 chooseHero();
             }
@@ -76,7 +74,6 @@ public class HeroMenu implements Serializable{
                 player = new Thief(7, 5, 5, 7, name, 1, 0);
                 heroes.add(player);
                 saveHero();
-                randomMonster();
             } else {
                 chooseHero();
             }
@@ -341,16 +338,16 @@ public class HeroMenu implements Serializable{
     public static int heroAttack(int heroAttack, int monsterAgility, String monsterName) {
 
         int attackSum = attack(heroAttack);
-        System.out.println(ANSI_GREEN + "\nYou attack with a level " + attackSum + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "\nYou attacked!");
 
         int agilitySum = dodge(monsterAgility);
-        System.out.println("The " + monsterName + " try to get away with a level " + agilitySum + " dodge!");
+        System.out.println("The " + monsterName + " tries to dodge!");
 
         if (attackSum > agilitySum) {
             System.out.println(ANSI_GREEN + "Your attack hit the " + monsterName + " which loses 1 HP!" + ANSI_RESET);
             return 1;
         } else {
-            System.out.println(ANSI_RED + "You miss the " + monsterName + " ..." + ANSI_RESET);
+            System.out.println(ANSI_RED + "You miss the " + monsterName + " ...pathetic..." + ANSI_RESET);
             return 0;
         }
     }
@@ -358,17 +355,17 @@ public class HeroMenu implements Serializable{
     public static Fight.FightState monsterAttack(int monsterAttack, int heroAgility, String monsterName) {
 
         int attackSum = attack(monsterAttack);
-        System.out.println(ANSI_RED + "\nThe monster attacks you with a level " + attackSum + ANSI_RESET);
+        System.out.println(ANSI_RED + "\nThe " + monsterName + " attacks you ");
 
         int agilitySum = dodge(heroAgility);
-        System.out.println("You try to get away with a level " + agilitySum + " dodge!");
+        System.out.println("You try to dodge!");
 
         if (attackSum > agilitySum) {
             System.out.println(ANSI_RED + "The " + monsterName + "'s attack hit you and you lose 1 HP..." + ANSI_RESET);
             player.setHealth(player.getHealth() - 1);
-            System.out.println("  ============================================================ ");
-            System.out.println(" |    Player health: " + player.getHealth()+"                                        |");          
-            System.out.println("  ============================================================ ");
+            System.out.println("  ======================= ");
+            System.out.println("  | Player health: " + player.getHealth()+ "    |");          
+            System.out.println("  ======================= ");
             return Fight.FightState.continue_attack;
         }
         System.out.println(ANSI_GREEN + "\nThe " + monsterName + " swings and misses you!" + ANSI_RESET);
