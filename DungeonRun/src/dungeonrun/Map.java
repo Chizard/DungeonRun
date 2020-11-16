@@ -1,5 +1,6 @@
 package dungeonrun;
 
+import java.awt.Color;
 import java.util.*;
 
 public class Map {
@@ -12,63 +13,36 @@ public class Map {
     String ANSI_BLUE = "\033[34;1m";
     String ANSI_CYAN = "\033[36;1m";
     String ANSI_WHITE = "\033[37;1m";
-    Scanner input = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
+
+    //static ArrayList<Monsters> monsters = new ArrayList<>();
     int mapChoice;
     int position = 0;
     int treasurePoints;
+
     int[][] mapSmall = new int[4][4];
     int[][] mapMedium = new int[5][5];
     int[][] mapLarge = new int[8][8];
 
     public void welcomeMessage() {
-        System.out.println(ANSI_YELLOW + "  .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:." + ANSI_RESET);
-        System.out.println();
-        System.out.println("           _.--\"\"\"\"\"--._");
-        System.out.println("           /                \\         WELCOME TO THE MAP ");
-        System.out.println("          ;                   ;       ******************");
-        System.out.println("          |                   |      (  )");
-        System.out.println("          |                   |     ( ) ");
-        System.out.println("          ;                   ;   ( )");
-        System.out.println("          \\ (`'--,    ,--'`) / ()");
-        System.out.println("          \\ \\  _ )  ( _  / /");
-        System.out.println("           ) )(')/    \\(')( (");
-        System.out.println("          (_ `\"\"` /\\  `\"\"´)");
-        System.out.println("           \\`\"-, /  \\ ,-\"`/");
-        System.out.println("            \\ //  `\"\"` \\ //`");
-        System.out.println("             |/\\/\\/\\/\\/\\/|");
-        System.out.println("              |\\       //|");
-        System.out.println("              ;||/\\/\\/\\||");
-        System.out.println("               \\`-`--`-`/");
-        System.out.println("                \\      /");
-        System.out.println("                 ',__,'");
-        System.out.println("                  q__p");
-        System.out.println("                  q__p");
-        System.out.println("                  q__p");
-        System.out.println("                  q__p");
-        System.out.println();
-
-        System.out.println("  _^__                                                                __^__");
-        System.out.println("( ___ )--------------------------------------------------------------( ___ )");
-        System.out.println(" | / |             The adventure will follow a map.                  | \\ |");
-        System.out.println(" | / |      In each room of the map something may occur,             | \\ |");
-        System.out.println(" | / |       either one or multiple monsters may appaer,             | \\ |");
-        System.out.println(" | / |             and/or treasures will be found.                   | \\ |");
-        System.out.println(" | / | Everything is random, no one knows exactly what might happen. | \\ |");
-        System.out.println(" | / |       After entered room, the room will appear as a 0,        | \\ |");
-        System.out.println(" | / |        meaning that the room has already been visited.        | \\ |");
-        System.out.println(" | / |                                                               | \\ |");
-        System.out.println(" | / |         When you have won all fights and visited              | \\ |");
-        System.out.println(" | / |       all rooms on the map, you have won the game.            | \\ |");
-        System.out.println(" | / |   The game may also end if you get defeated during the game.  | \\ |");
-        System.out.println(" | / |    You will also have the choice to leave the map if needed.  | \\ |");
-        System.out.println(" | / |                                                               | \\ |");
-        System.out.println(" |___|                         Good luck!                            |___|");
-        System.out.println("(_____)-------------------------------------------------------------(_____)");
+        System.out.println(ANSI_BLUE + "  _^__                                                                __^__");
+        System.out.println(ANSI_BLUE + "( ___ )--------------------------------------------------------------( ___ )");
+        System.out.println(ANSI_BLUE + " | / |             The adventure will follow a map.                   | \\ |");
+        System.out.println(ANSI_BLUE + " | / |      In each room of the map something may occur,              | \\ |");
+        System.out.println(ANSI_BLUE + " | / |       either one or multiple monsters may appear,              | \\ |");
+        System.out.println(ANSI_BLUE + " | / |             and/or treasures will be found.                    | \\ |");
+        System.out.println(ANSI_BLUE + " | / | Everything is random, no one knows exactly what might happen.  | \\ |");
+        System.out.println(ANSI_BLUE + " | / |       After entered room, the room will appear as a 0,         | \\ |");
+        System.out.println(ANSI_BLUE + " | / |        meaning that the room has already been visited.         | \\ |");
+        System.out.println(ANSI_BLUE + " | / |                                                                | \\ |");
+        System.out.println(ANSI_BLUE + " | / |                      Good luck!                                | \\ |");
+        System.out.println(ANSI_BLUE + " |___|                                                                |___|");
+        System.out.println(ANSI_BLUE + "(_____)--------------------------------------------------------------(_____)" + ANSI_RESET);
         System.out.println();
 
     }
 
-    public void exitFromMap() { //kallar på MAINDungeonRun.homeInput(MAINDungeonRun.home());
+    public void exitFromMap() { //Kallar på mainMenu
 
         System.out.println("Do you want to return to main menu, please enter Y/N; ");
         char choice;
@@ -76,13 +50,13 @@ public class Map {
         if (choice == 'Y' || choice == 'y') {
             MAINDungeonRun.homeInput(MAINDungeonRun.home());
         }
-    }//kallar på MAINDungeonRun.homeInput(MAINDungeonRun.home());
+    }
 
     public int selectMap() {
-        System.out.println(ANSI_CYAN + "You can choose between the following adventures: " + ANSI_RESET);
-        System.out.println(ANSI_CYAN + "1) Map small" + ANSI_RESET);
-        System.out.println(ANSI_CYAN + "2) Map medium" + ANSI_RESET);
-        System.out.println(ANSI_CYAN + "3) Map large" + ANSI_RESET);
+        System.out.println("You can choose between the following adventures: ");
+        System.out.println("1) Map small");
+        System.out.println("2) Map medium");
+        System.out.println("3) Map large");
         System.out.println();
         System.out.println("Your choice: ");
 
@@ -289,7 +263,7 @@ public class Map {
         System.out.println("---------------------------------------");
     }
 
-    public boolean ifVisited() { 
+    public boolean ifVisited() {
         boolean ifVisited = false;
         if (mapChoice == 1) {
             int countNoNotZero = 0;
@@ -304,7 +278,7 @@ public class Map {
                         }
                     }
                 }
-            }         
+            }
         } else if (mapChoice == 2) {
             int countNoNotZero = 0;
             ifVisited = false;
@@ -341,7 +315,7 @@ public class Map {
         boolean running = true;
 
         while (running) {
-            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
+            System.out.println("\nPlease choose which corner you would like to start at: ");
             position = input.nextInt();
 
             if (mapChoice == 1) {
@@ -351,7 +325,7 @@ public class Map {
                     System.out.println("Wrong input, please try again");
                 }
             } else if (mapChoice == 2) {
-                if ((position == 1) || (position == 5) || (position == 18) || (position == 22)) {
+                if ((position == 1) || (position == 5) || (position == 21) || (position == 25)) {
                     System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
                     return position;
                 } else {
@@ -380,16 +354,16 @@ public class Map {
             boolean tru = randomExit();
             if (tru == true) {
                 visitedRoomSmall();  //som går vidare till choiceOfDirectionMapSmall();  som går vidare till visitedRoom();
-            }         
+            }
             Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
             if (Fight.FightState.player_died == finishState) {
-            return;                                                 // Bestäm vad som ska hända när spelaren dör
+                return;                                                 // Bestäm vad som ska hända när spelaren dör
             }
             boolean truth = randomTreasure();
             if (truth == true) {
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println("Your total points of treasure is: " + treasurePoints);
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println(" ");
                 //randomMonster(); //får ligga här sålänge bara för att testa
                 visitedRoomSmall();
@@ -405,15 +379,16 @@ public class Map {
             if (tru == true) {
                 visitedRoomMedium();  //som SKA GÅ vidare till choiceOfDirectionMapMEDIUM();  som går vidare till visitedRoom();
             }
-            Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
+            /*Fight.FightState finishState = HeroMenu.startGame();   // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, 
+            spelaren flydde och om inga monster fanns och gå till skatter
             if (Fight.FightState.player_died == finishState) {
-            return;                                                 // Bestäm vad som ska hända när spelaren dör
-            }
+            return;                                                  // Bestäm vad som ska hända när spelaren dör
+            }*/
             boolean truth = randomTreasure();
             if (truth == true) {
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println("Your total points of treasure is: " + treasurePoints);
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println(" ");
                 //randomMonster(); //får ligga här sålänge bara för att testa
                 visitedRoomMedium();
@@ -429,15 +404,18 @@ public class Map {
             if (tru == true) {
                 visitedRoomLarge();  //som SKA GÅ vidare till choiceOfDirectionMapLARGE();  som går vidare till visitedRoom();
             }
-            Fight.FightState finishState = HeroMenu.startGame();    // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, spelaren flydde och om inga monster fanns 
+            //if (saker händer kring monster...) { 
+            // System.out.println("då får vi se vad som händer...");
+            /*Fight.FightState finishState = HeroMenu.startGame();   // startGame() returnera om spelaren dog, om alla monster dog, om ett monster dog, 
+            spelaren flydde och om inga monster fanns och gå till skatter
             if (Fight.FightState.player_died == finishState) {
-            return;                                                 // Bestäm vad som ska hända när spelaren dör
-            }
+            return;                                                  // Bestäm vad som ska hända när spelaren dör
+            }*/
             boolean truth = randomTreasure();
             if (truth == true) {
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println("Your total points of treasure is: " + treasurePoints);
-                System.out.println("********************************************************************");
+                System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
                 System.out.println(" ");
                 //randomMonster(); //får ligga här sålänge bara för att testa
                 visitedRoomLarge();
@@ -447,21 +425,25 @@ public class Map {
         }
     }
 
-    public void visitedRoomSmall() { //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapSmall();
-
+    public void visitedRoomSmall() { //KALLAR PÅ Allroomsdone och choiceOfDirectionMapSmall();
+        //allRoomsDone();  denna funkar ej, 
+        //HeroMenu.randomMonster();
+        //randomTreasure();
+        //randomExit();
         for (int k = 0; k < mapSmall.length; k++) {
             for (int l = 0; l < mapSmall.length; l++) {
 
                 if (mapSmall[k][l] == position) {
                     mapSmall[k][l] = 0;
+                    //    System.out.println("fortsätt spelet " + mapSmall[k][l]); //kolla så det stämmer printout
                 }
             }
         }
-        allRoomsDone();     ///******obs kan vi flytta denna???
+        allRoomsDone(); //*****Obs kan vi flytta på denna??
         int rows = 4;
         int columns = 4;
         int i, j;
-        System.out.println("********************************************************************");
+        //System.out.println("********************************************************************");
         System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
@@ -473,8 +455,9 @@ public class Map {
             System.out.println("");
         }
         System.out.println("------------------");
-        choiceOfDirectionMapSmall();    //testar att kalla på denna här för att få körschemat att funka
-    }//KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapSmall(); 
+        choiceOfDirectionMapSmall();//Testar att kalla på denna här för att få körschemat att fungera
+
+    }//Kallar på allroomsdone och choiceofDriectionmapSmall //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
 
     public void choiceOfDirectionMapSmall() {
         int choice = 0;
@@ -808,8 +791,11 @@ public class Map {
         visitedRoom();
     }  //KALLAR I SLUTET PÅ VISITEDROOM   
 
-    public void visitedRoomMedium() { //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapMedium(); 
-        
+    public void visitedRoomMedium() {
+        //allRoomsDone();  denna funkar ej, 
+        //HeroMenu.randomMonster();
+        //randomTreasure();
+        //randomExit();
         for (int k = 0; k < mapMedium.length; k++) {
             for (int l = 0; l < mapMedium.length; l++) {
 
@@ -818,11 +804,11 @@ public class Map {
                 }
             }
         }
-        allRoomsDone();     ///******obs kan vi flytta denna???
+        allRoomsDone(); //******Obs kan vi flytta på denna??
         int rows = 5;
         int columns = 5;
         int i, j;
-        System.out.println("********************************************************************");
+        //System.out.println("********************************************************************");
         System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
@@ -835,8 +821,8 @@ public class Map {
         }
         System.out.println("------------------");
         choiceOfDirectionMapMedium();
-    } //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapMedium();
-    
+    } //Kallar på allroomsdone och choiceOfDirectionMapMedium(); //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
+
     public void choiceOfDirectionMapMedium() {  //kallar på visitedRoom
         int choice = 0;
         boolean isGameOn = true;
@@ -1387,8 +1373,11 @@ public class Map {
         visitedRoom();
     }  //KALLAR I SLUTET PÅ VISITEDROOM
 
-    public void visitedRoomLarge() {//KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapLarge();
-  
+    public void visitedRoomLarge() {
+        //allRoomsDone();  denna funkar ej, 
+        //HeroMenu.randomMonster();
+        //randomTreasure();
+        //randomExit();
         for (int k = 0; k < mapLarge.length; k++) {
             for (int l = 0; l < mapLarge.length; l++) {
 
@@ -1397,11 +1386,11 @@ public class Map {
                 }
             }
         }
-        allRoomsDone();     ///******obs kan vi flytta denna???
+        allRoomsDone(); //****Obs kan vi flytta på denna??
         int rows = 8;
         int columns = 8;
         int i, j;
-        System.out.println("********************************************************************");
+        //System.out.println("********************************************************************");
         System.out.println(" ");
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
@@ -1414,7 +1403,7 @@ public class Map {
         }
         System.out.println("------------------------------------------");
         choiceOfDirectionMapLarge();
-    } //KALLAR PÅ ALLROOMSDONE och choiceOfDirectionMapLarge();
+    } //Kallar på allroomsdone och choiceOfDirectionMapLarge //KALLAR PÅ RANDOM (MONSTER, SKATTER OCH EXIT)
 
     public void choiceOfDirectionMapLarge() {
         int choice = 0;
@@ -2865,43 +2854,43 @@ public class Map {
         }
 
         visitedRoom();
-    } //KALLAR I SLUTET PÅ VISITEDROOM
+    } //KALLAR I SLUTET PÅ VISITEDROOM  
 
     public boolean randomTreasure() {  //lägg in i fightdelen, om vinna så plocka ev.skatt
         boolean randomTreasure = false;
         Random random = new Random();
         if (Math.random() * 100 < 40) {     //lösa slanatar 40, 
             randomTreasure = true;
-            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a coin! Its worth 2 points!");
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println(ANSI_BLUE + "Congrats! You won a coin! Its worth 2 points!" + ANSI_RESET);
             int coinPoints = 2;
             treasurePoints += coinPoints;
         }
         if (Math.random() * 100 < 20) {  //pengapung 20   
             randomTreasure = true;
-            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a purse with coins in it! Its worth 6 points!");
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println(ANSI_BLUE + "Congrats! You won a purse with coins in it! Its worth 6 points!" + ANSI_RESET);
             int pursePoints = 6;
             treasurePoints += pursePoints;
         }
         if (Math.random() * 100 < 15) {   //gold jewelry 15
             randomTreasure = true;
-            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won gold jewelry! Its worth 10 points!");
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println(ANSI_BLUE + "Congrats! You won gold jewelry! Its worth 10 points!" + ANSI_RESET);
             int goldPoints = 10;
             treasurePoints += goldPoints;
         }
         if (Math.random() * 100 < 10) {     //ädelsten 10
             randomTreasure = true;
-            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a precious stone! Its worth 14 points!");
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println(ANSI_BLUE + "Congrats! You won a precious stone! Its worth 14 points!" + ANSI_RESET);
             int stonePoints = 14;
             treasurePoints += stonePoints;
         }
         if (Math.random() * 100 < 5) {     //skattkista 5
             randomTreasure = true;
-            System.out.println("\n-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Congrats! You won a small treasure chest! Its worth 20 points!");
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println(ANSI_BLUE + "Congrats! You won a small treasure chest! Its worth 20 points!" + ANSI_RESET);
             int chestPoints = 20;
             treasurePoints += chestPoints;
         }
@@ -2911,13 +2900,13 @@ public class Map {
     public boolean randomExit() {  //OBS koppla till om monster el skatt dykt upp
         boolean randomExit = false;
         char choice;
-        if (Math.random() * 100 < 20) { //hur stor % chans? 20%
+        if (Math.random() * 100 < 5) { //hur stor % chans? 20% är för ofta
             randomExit = true;
-            System.out.println("________________________________________________________________");
+            System.out.println("_______________________________________________________________________________");
             System.out.println("\nThis is an exitroom,do you want to return to main "
-                    + "menu please enter Y/N?");           
+                    + "menu please enter Y/N?");
             choice = input.next().charAt(0);
-            System.out.println("________________________________________________________________");
+            System.out.println("_______________________________________________________________________________");
             if (choice == 'Y' || choice == 'y') {
                 MAINDungeonRun.homeInput(MAINDungeonRun.home());
             }
@@ -2941,8 +2930,7 @@ public class Map {
             if (totalRooms == countVisitedRooms) {
                 System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
                 MAINDungeonRun.homeInput(MAINDungeonRun.home());
-            } else {
-                System.out.println("There are still rooms unvisited");
+
             }
         } else if (mapChoice == 2) {
             for (int k = 0; k < mapMedium.length; k++) {
@@ -2956,8 +2944,6 @@ public class Map {
             if (totalRooms == countVisitedRooms) {
                 System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
                 MAINDungeonRun.homeInput(MAINDungeonRun.home());
-            } else {
-                System.out.println("There are still rooms unvisited");
             }
         } else if (mapChoice == 3) {
             for (int k = 0; k < mapLarge.length; k++) {
@@ -2971,9 +2957,10 @@ public class Map {
             if (totalRooms == countVisitedRooms) {
                 System.out.println("Congrats, all rooms done!"); //kalla på mainmetod samt lägg in statistik ex alla skatter
                 MAINDungeonRun.homeInput(MAINDungeonRun.home());
-            } else {
-                System.out.println("There are still rooms unvisited");
+
             }
         }
-    } 
+    }
+
+    //*******************************************************************************
 }

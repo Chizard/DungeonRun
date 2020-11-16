@@ -5,18 +5,18 @@ import java.util.*;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-public class HeroMenu implements Serializable {
+public class HeroMenu implements Serializable{
 
     static Scanner sc = new Scanner(System.in);
-
+    
     static Map m = new Map();
 
-    static ArrayList<Heroes> heroes = new ArrayList<>();
     static ArrayList<Monsters> monsters = new ArrayList<>();
+    static ArrayList<Heroes> heroes = new ArrayList<>();
     static ArrayList<Integer> initiative = new ArrayList<>();
     static ArrayList<Creatures> creatures = new ArrayList<>();
     static Heroes player;
-
+    
     static String ANSI_RESET = "\033[0m";
     static String ANSI_GREEN = "\033[32;1m";
     static String ANSI_RED = "\033[31;1m";
@@ -25,7 +25,7 @@ public class HeroMenu implements Serializable {
     static String ANSI_BLUE = "\033[34;1m";
     static String ANSI_CYAN = "\033[36;1m";
     static String ANSI_WHITE = "\033[37;1m";
-
+    
     static boolean checkName = true;
 
     public static void chooseHero() {
@@ -46,10 +46,10 @@ public class HeroMenu implements Serializable {
             String name = name();
             String role = "Knight";
             if (confirm == true && checkName(name) == true) {
-                player = new Knight(5, 6, 1, 1, name, 1, 0);
+                player = new Knight(5, 6, 9, 4, name, 1, 0);
                 heroes.add(player);
                 saveHero();
-                // randomMonster();
+                //randomMonster();
             } else {
                 chooseHero();
             }
@@ -67,7 +67,7 @@ public class HeroMenu implements Serializable {
             } else {
                 chooseHero();
             }
-        } else if (userInput == 3) {
+        }  else if (userInput == 3) {
             Thief.stats();
             boolean confirm = confirmHero();
             String name = name();
@@ -88,19 +88,19 @@ public class HeroMenu implements Serializable {
 
     }
 
-    public static Fight.FightState startGame() {
+   public static Fight.FightState startGame() {
         randomMonster();
         if (monsters.size() > 0) {
             return battle();                            //Returnerar player escaped, player died, all monsters died, monster died, monsters empty
         }
-        System.out.println("\nNo monsters in this room!\n");
+        System.out.println(ANSI_GREEN + "No monsters in this room!" + ANSI_RESET);
         return Fight.FightState.monsters_empty;
 
     }
 
     public static boolean confirmHero() {
 
-        System.out.println("\nContinue? \n1. Yes \n2. No");
+        System.out.println("\nDo you want to continue with this character? \n1. Yes \n2. No");
 
         int userInput = sc.nextInt();
         sc.nextLine();
@@ -121,7 +121,7 @@ public class HeroMenu implements Serializable {
     }
 
     public static String name() {
-        System.out.println("\nEnter name");
+        System.out.println("\nChoose a name for your character:");
         String input = sc.nextLine();
 
         return input;
@@ -133,9 +133,7 @@ public class HeroMenu implements Serializable {
             if (name.equalsIgnoreCase(h.getName())) {
                 checkName = false;
                 System.out.println("Hero already exists!");
-
             }
-
         }
         return checkName;
     }
@@ -156,28 +154,28 @@ public class HeroMenu implements Serializable {
         Random random = new Random();
         monsters.clear();
 
-        if (Math.random() * 100 < 100) {     //jättespindel 20, 
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Watch out, there's a Giantspider ahead!");
+        if (Math.random() * 100 < 20) {     //jättespindel 20, 
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+");
+            System.out.println("Watch out, there's a Giantspider ahead!\n");
             Monsters spider = new GiantSpider(7, 2, 1, 3, "Giant Spider", 2, 0);
             monsters.add(spider);
         }
 
-        if (Math.random() * 100 < 100) {  //skelett 15  
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Watch out, there's a Skeleton ahead!");
+        if (Math.random() * 100 < 15) {  //skelett 15  
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+");
+            System.out.println("Watch out, there's a Skeleton ahead!\n");
             Monsters skeleton = new Skeleton(4, 3, 2, 3, "Skeleton", 2, 0);
             monsters.add(skeleton);
         }
-        if (Math.random() * 100 < 100) {   //orc 10
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Watch out, there's an Orc ahead!");
+        if (Math.random() * 100 < 10) {   //orc 10
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+");
+            System.out.println("Watch out, there's an Orc ahead!\n");
             Monsters orc = new Orc(6, 4, 3, 4, "Orc", 2, 0);
             monsters.add(orc);
         }
-        if (Math.random() * 100 < 100) {     //troll 5
-            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
-            System.out.println("Watch out, there's a Troll ahead!");
+        if (Math.random() * 100 < 5) {     //troll 5
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+");
+            System.out.println("Watch out, there's a Troll ahead!\n");
             Monsters troll = new Troll(2, 7, 4, 2, "Troll", 2, 0);
             monsters.add(troll);
         }
@@ -216,21 +214,53 @@ public class HeroMenu implements Serializable {
                 // Check if player is still alive else continue attack
                 currentState = isPlayerAlive();
                 if (currentState == Fight.FightState.player_died) {
-                    System.out.println("Player died.");
-                    return currentState;
+                    System.out.println("Player died."); 
+                    System.out.println(ANSI_YELLOW + "  .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:." + ANSI_RESET);
+                    System.out.println();
+                    System.out.println("           _.--\"\"\"\"\"--._");
+                    System.out.println("           /                \\            ☠YOU DIED☠"  );
+                    System.out.println("          ;                   ;       ******************");
+                    System.out.println("          |                   |      (  )");
+                    System.out.println("          |                   |     ( ) ");
+                    System.out.println("          ;                   ;   ( )");
+                    System.out.println("          \\ (`'--,    ,--'`) / ()");
+                    System.out.println("          \\ \\  _ )  ( _  / /");
+                    System.out.println("           ) )(')/    \\(')( (");
+                    System.out.println("          (_ `\"\"` /\\  `\"\"´)");
+                    System.out.println("           \\`\"-, /  \\ ,-\"`/");
+                    System.out.println("            \\ //  `\"\"` \\ //`");
+                    System.out.println("             |/\\/\\/\\/\\/\\/|");
+                    System.out.println("              |\\       //|");
+                    System.out.println("              ;||/\\/\\/\\||");
+                    System.out.println("               \\`-`--`-`/");
+                    System.out.println("                \\      /");
+                    System.out.println("                 ',__,'");
+                    System.out.println("                  q__p");
+                    System.out.println("                  q__p");
+                    System.out.println("                  q__p");
+                    System.out.println("                  q__p");
+                    System.out.println();
+                    System.out.println("Do you want to continue with the game? Y/N");
+                    char choice;
+                    choice = sc.next().charAt(0);
+                    if (choice == 'Y' || choice == 'y') {
+                        MAINDungeonRun.homeInput(MAINDungeonRun.home());
+                        }
+                        return currentState;
+                    
                 }
                 currentState = areMonstersAlive();
                 if (currentState == Fight.FightState.monsters_died) {
-                    System.out.println("You slayed them all!");
+                    System.out.println(ANSI_GREEN + "You slayed them all!" + ANSI_RESET);
                     return currentState;
                 }
                 currentState = isMonsterAlive(monster);
                 if (currentState == Fight.FightState.monster_died) {
-                    System.out.println("You killed the " + monster.getName());
+                    System.out.println(ANSI_GREEN + "You killed the " + monster.getName()+ ANSI_RESET);
                 }
 
                 if (currentState == Fight.FightState.player_escape_success) {
-                    System.out.println("Coward!");
+                    System.out.println(ANSI_PURPLE + "Coward!" + ANSI_RESET);
                     return currentState;
                 }
 
@@ -311,16 +341,16 @@ public class HeroMenu implements Serializable {
     public static int heroAttack(int heroAttack, int monsterAgility, String monsterName) {
 
         int attackSum = attack(heroAttack);
-        System.out.println("\nYou attack with a level " + attackSum + " attack");
+        System.out.println(ANSI_GREEN + "\nYou attack with a level " + attackSum + ANSI_RESET);
 
         int agilitySum = dodge(monsterAgility);
-        System.out.println("and the " + monsterName + " try to get away with a level " + agilitySum + " dodge!");
+        System.out.println("The " + monsterName + " try to get away with a level " + agilitySum + " dodge!");
 
         if (attackSum > agilitySum) {
-            System.out.println("So your attack hit the " + monsterName + " which loses 1 HP!");
+            System.out.println(ANSI_GREEN + "Your attack hit the " + monsterName + " which loses 1 HP!" + ANSI_RESET);
             return 1;
         } else {
-            System.out.println("So you miss the " + monsterName + " ...");
+            System.out.println(ANSI_RED + "You miss the " + monsterName + " ..." + ANSI_RESET);
             return 0;
         }
     }
@@ -328,18 +358,20 @@ public class HeroMenu implements Serializable {
     public static Fight.FightState monsterAttack(int monsterAttack, int heroAgility, String monsterName) {
 
         int attackSum = attack(monsterAttack);
-        System.out.println("\nThe monster attacks you with a level " + attackSum + " attack");
+        System.out.println(ANSI_RED + "\nThe monster attacks you with a level " + attackSum + ANSI_RESET);
 
         int agilitySum = dodge(heroAgility);
-        System.out.println("and you try to get away with a level " + agilitySum + " dodge!");
+        System.out.println("You try to get away with a level " + agilitySum + " dodge!");
 
         if (attackSum > agilitySum) {
-            System.out.println("So the " + monsterName + "'s attack hit you an you lose 1 HP...");
+            System.out.println(ANSI_RED + "The " + monsterName + "'s attack hit you and you lose 1 HP..." + ANSI_RESET);
             player.setHealth(player.getHealth() - 1);
-            System.out.println("Player health: " + player.getHealth());
+            System.out.println("  ============================================================ ");
+            System.out.println(" |    Player health: " + player.getHealth()+"                                        |");          
+            System.out.println("  ============================================================ ");
             return Fight.FightState.continue_attack;
         }
-        System.out.println("So the " + monsterName + "swings and misses you!");
+        System.out.println(ANSI_GREEN + "\nThe " + monsterName + " swings and misses you!" + ANSI_RESET);
         return Fight.FightState.continue_attack;
 
     }
